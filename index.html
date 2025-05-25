@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Kevram Tech - Solutions Technologiques</title>
+  <meta name="description" content="Kevram Tech - Votre partenaire technologique pour le développement web, mobile et les solutions digitales">
+  <meta name="keywords" content="technologie, développement web, applications mobiles, solutions digitales, Kevram Tech">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    .service-item .img {
+      height: 250px;
+      overflow: hidden;
+    }
+    .service-item .img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .service-item {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-item .details {
+      flex: 1;
+      padding: 30px;
+    }
+    .client-item {
+      padding: 20px;
+      transition: all 0.3s;
+    }
+    .client-item:hover {
+      background: rgba(0,0,0,0.05);
+      border-radius: 5px;
+    }
+  </style>
+
+  <!-- =======================================================
+  * Site Name: Kevram Tech
+  * Updated: 2024
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <h1 class="sitename">Kevram Tech</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Accueil</a></li>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Réalisations</a></li>
+          <li><a href="#team">Équipe</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="cta-btn" href="index.html#about">Commencer</a>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+      <div class="container d-flex flex-column align-items-center">
+        <h2 data-aos="fade-up" data-aos-delay="100">INNOVONS POUR L'AFRIQUE</h2>
+        <p data-aos="fade-up" data-aos-delay="200">Nous créons des solutions technologiques adaptées aux besoins du continent africain</p>
+        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+          <a href="#about" class="btn-get-started">Commencer</a>
+          <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Regarder la vidéo</span></a>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <h3>Solutions digitales innovantes pour l'Afrique</h3>
+            <img src="assets/img/about.jpg" class="img-fluid rounded-4 mb-4" alt="">
+            <p>Kevram Tech est une entreprise technologique africaine dédiée à la création de solutions numériques innovantes. Notre mission est de contribuer au développement technologique du continent en proposant des services adaptés aux réalités locales.</p>
+            <p>Nous comprenons les défis uniques du marché africain et nous nous efforçons de créer des solutions accessibles, pratiques et durables qui répondent aux besoins spécifiques de nos clients.</p>
+          </div>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
+            <div class="content ps-0 ps-lg-5">
+              <p class="fst-italic">
+                Notre expertise couvre plusieurs domaines clés du développement numérique en Afrique :
+              </p>
+              <ul>
+                <li><i class="bi bi-check-circle-fill"></i> <span>Développement d'applications mobiles adaptées au marché africain</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>Solutions de paiement mobile et de commerce électronique</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>Services cloud et solutions digitales pour les entreprises africaines</span></li>
+              </ul>
+              <p>
+                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
+              </p>
+
+              <div class="position-relative mt-4">
+                <img src="assets/img/about-2.jpg" class="img-fluid rounded-4" alt="">
+                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats section light-background">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-emoji-smile color-blue flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Clients Satisfaits</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-journal-richtext color-orange flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Projets</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-headset color-green flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Heures de Support</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item d-flex align-items-center w-100 h-100">
+              <i class="bi bi-people color-pink flex-shrink-0"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Travailleurs Acharnés</p>
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Stats Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nos Services</h2>
+        <p>Des solutions numériques innovantes pour l'Afrique</p>
+      </div>
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-5">
+          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+            <div class="service-item">
+              <div class="img">
+                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166" class="img-fluid" alt="Développement Web">
+              </div>
+              <div class="details position-relative">
+                <div class="icon">
+                  <i class="bi bi-code-slash"></i>
+                </div>
+                <a href="service-details.html" class="stretched-link">
+                  <h3>Développement Web</h3>
+                </a>
+                <p>Création de sites web professionnels, applications web sur mesure et solutions e-commerce adaptées au marché africain.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+            <div class="service-item">
+              <div class="img">
+                <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356" class="img-fluid" alt="Applications Mobiles">
+              </div>
+              <div class="details position-relative">
+                <div class="icon">
+                  <i class="bi bi-phone"></i>
+                </div>
+                <a href="service-details.html" class="stretched-link">
+                  <h3>Applications Mobiles</h3>
+                </a>
+                <p>Développement d'applications mobiles natives et hybrides pour iOS et Android, intégrant les moyens de paiement locaux.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+            <div class="service-item">
+              <div class="img">
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995" class="img-fluid" alt="Intelligence Artificielle">
+              </div>
+              <div class="details position-relative">
+                <div class="icon">
+                  <i class="bi bi-robot"></i>
+                </div>
+                <a href="service-details.html" class="stretched-link">
+                  <h3>Intelligence Artificielle</h3>
+                </a>
+                <p>Solutions IA personnalisées : chatbots, analyse de données, automatisation et systèmes de recommandation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="500">
+            <div class="service-item">
+              <div class="img">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31" class="img-fluid" alt="Cybersécurité">
+              </div>
+              <div class="details position-relative">
+                <div class="icon">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <a href="service-details.html" class="stretched-link">
+                  <h3>Cybersécurité</h3>
+                </a>
+                <p>Audit de sécurité, protection des données et mise en conformité avec les normes de sécurité internationales.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="600">
+            <div class="service-item">
+              <div class="img">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" class="img-fluid" alt="Solutions Cloud">
+              </div>
+              <div class="details position-relative">
+                <div class="icon">
+                  <i class="bi bi-cloud-arrow-up"></i>
+                </div>
+                <a href="service-details.html" class="stretched-link">
+                  <h3>Solutions Cloud</h3>
+                </a>
+                <p>Hébergement, migration cloud et solutions de stockage sécurisées adaptées aux entreprises africaines.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="700">
+            <div class="service-item">
+              <div class="img">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" class="img-fluid" alt="Formation & Conseil">
+              </div>
+              <div class="details position-relative">
+                <div class="icon">
+                  <i class="bi bi-people"></i>
+                </div>
+                <a href="service-details.html" class="stretched-link">
+                  <h3>Formation & Conseil</h3>
+                </a>
+                <p>Accompagnement personnalisé, formation technique et conseil en transformation digitale pour votre entreprise.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section id="clients" class="clients section light-background">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Nos Partenaires</h2>
+          <p>Ils nous font confiance</p>
+        </div>
+
+        <div class="row gy-4">
+          <div class="col-xl-2 col-md-3 col-6 client-logo client-item">
+            <img src="assets/img/partners/yas-togo.png" class="img-fluid" alt="YAS Togo">
+          </div>
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo client-item">
+            <img src="assets/img/partners/moov-togo.png" class="img-fluid" alt="MOOV Togo">
+          </div>
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo client-item">
+            <img src="assets/img/partners/laposte-togo.png" class="img-fluid" alt="La Poste Togo">
+          </div>
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo client-item">
+            <img src="assets/img/partners/ul-togo.png" class="img-fluid" alt="Université de Lomé">
+          </div>
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo client-item">
+            <img src="assets/img/partners/microsoft.png" class="img-fluid" alt="Microsoft">
+          </div>
+
+          <div class="col-xl-2 col-md-3 col-6 client-logo client-item">
+            <img src="assets/img/partners/github.png" class="img-fluid" alt="GitHub">
+          </div>
+        </div>
+
+      </div>
+    </section><!-- /Clients Section -->
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Réalisations</h2>
+        <p>Découvrez nos projets innovants</p>
+      </div>
+
+      <div class="container">
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">Tous</li>
+            <li data-filter=".filter-web">Web</li>
+            <li data-filter=".filter-mobile">Mobile</li>
+            <li data-filter=".filter-ai">IA</li>
+            <li data-filter=".filter-cloud">Cloud</li>
+          </ul>
+
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web">
+              <div class="portfolio-content h-100">
+                <img src="https://images.unsplash.com/photo-1661956602116-aa6865609028" class="img-fluid" alt="E-commerce Platform">
+                <div class="portfolio-info">
+                  <h4>E-commerce AfrikMarket</h4>
+                  <p>Plateforme de vente en ligne avec paiement mobile intégré</p>
+                  <a href="https://images.unsplash.com/photo-1661956602116-aa6865609028" title="E-commerce AfrikMarket" data-gallery="portfolio-gallery-web" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="Plus de détails" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-mobile">
+              <div class="portfolio-content h-100">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c" class="img-fluid" alt="Mobile App">
+                <div class="portfolio-info">
+                  <h4>App Mobile TogoDeliver</h4>
+                  <p>Application de livraison à domicile multiservices</p>
+                  <a href="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c" title="App Mobile TogoDeliver" data-gallery="portfolio-gallery-mobile" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="Plus de détails" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ai">
+              <div class="portfolio-content h-100">
+                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb" class="img-fluid" alt="AI Dashboard">
+                <div class="portfolio-info">
+                  <h4>AI Analytics Dashboard</h4>
+                  <p>Système d'analyse prédictive pour entreprises</p>
+                  <a href="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb" title="AI Analytics" data-gallery="portfolio-gallery-ai" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="Plus de détails" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-cloud">
+              <div class="portfolio-content h-100">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" class="img-fluid" alt="Cloud Infrastructure">
+                <div class="portfolio-info">
+                  <h4>Cloud Migration Finance</h4>
+                  <p>Migration d'infrastructure bancaire vers le cloud</p>
+                  <a href="https://images.unsplash.com/photo-1451187580459-43490279c0fa" title="Cloud Migration" data-gallery="portfolio-gallery-cloud" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="Plus de détails" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web">
+              <div class="portfolio-content h-100">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644" class="img-fluid" alt="Online Learning Platform">
+                <div class="portfolio-info">
+                  <h4>Plateforme EdTech</h4>
+                  <p>Solution d'apprentissage en ligne pour écoles</p>
+                  <a href="https://images.unsplash.com/photo-1523240795612-9a054b0db644" title="Plateforme EdTech" data-gallery="portfolio-gallery-web" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="Plus de détails" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-mobile">
+              <div class="portfolio-content h-100">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3" class="img-fluid" alt="Mobile Banking App">
+                <div class="portfolio-info">
+                  <h4>FinTech Mobile</h4>
+                  <p>Application de gestion financière personnelle</p>
+                  <a href="https://images.unsplash.com/photo-1563013544-824ae1b704d3" title="FinTech Mobile" data-gallery="portfolio-gallery-mobile" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="Plus de détails" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section><!-- /Portfolio Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>Nous contacter</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+          <div class="col-lg-6 ">
+            <div class="row gy-4">
+
+              <div class="col-lg-12">
+                <div class="info-item d-flex flex-column justify-content-center align-items-center">
+                  <i class="bi bi-geo-alt"></i>
+                  <h3>Adresse</h3>
+                  <p>Lomé, Togo</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="col-md-6">
+                <div class="info-item d-flex flex-column justify-content-center align-items-center">
+                  <i class="bi bi-telephone"></i>
+                  <h3>Appelez-nous</h3>
+                  <p>+228 92234825</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="col-md-6">
+                <div class="info-item d-flex flex-column justify-content-center align-items-center">
+                  <i class="bi bi-envelope"></i>
+                  <h3>Email</h3>
+                  <p>kevramtech@gmail.com</p>
+                </div>
+              </div><!-- End Info Item -->
+
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Votre Nom" required="">
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="email" class="form-control" name="email" placeholder="Votre Email" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Sujet" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <textarea class="form-control" name="message" rows="4" placeholder="Message" required=""></textarea>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <div class="loading">Chargement</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Votre message a été envoyé. Merci!</div>
+
+                  <button type="submit">Envoyer le message</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Kevram Tech</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>Lomé</p>
+            <p>Togo</p>
+            <p class="mt-3"><strong>Téléphone:</strong> <span>+228 92234825</span></p>
+            <p><strong>Email:</strong> <span>kevramtech@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Liens Utiles</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Accueil</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">À propos</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Conditions d'utilisation</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Nos Services</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Conception Web</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Développement Web</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Gestion de Produit</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Conception Graphique</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Notre Newsletter</h4>
+          <p>Abonnez-vous à notre newsletter et recevez les dernières nouvelles sur nos produits et services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="S'abonner"></div>
+            <div class="loading">Chargement</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Votre demande d'abonnement a été envoyée. Merci!</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Kevram Tech</strong> <span>Tous droits réservés</span></p>
+      <div class="credits">
+        Designed by <a href="#">Kevram 73</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
