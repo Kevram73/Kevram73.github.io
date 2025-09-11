@@ -122,6 +122,56 @@ function initSimpleNavigation() {
 
 // Pas d'animations de compteurs - affichage normal
 
+// Gestion des langues
+function initLanguageToggle() {
+    const languageToggle = document.getElementById('language-toggle');
+    const currentLangSpan = document.querySelector('.current-lang');
+    
+    if (!languageToggle || !currentLangSpan) return;
+    
+    // Récupérer la langue sauvegardée ou utiliser le français par défaut
+    let currentLanguage = localStorage.getItem('language') || 'fr';
+    
+    // Fonction pour changer la langue
+    function changeLanguage(lang) {
+        currentLanguage = lang;
+        localStorage.setItem('language', lang);
+        
+        // Mettre à jour l'affichage du bouton
+        currentLangSpan.textContent = lang.toUpperCase();
+        
+        // Traduire tous les éléments avec des attributs de traduction
+        const elementsToTranslate = document.querySelectorAll('[data-fr][data-en]');
+        elementsToTranslate.forEach(element => {
+            const translation = element.getAttribute(`data-${lang}`);
+            if (translation) {
+                element.textContent = translation;
+            }
+        });
+        
+        // Traduire les placeholders des inputs
+        const inputsWithPlaceholders = document.querySelectorAll('input[data-fr-placeholder], textarea[data-fr-placeholder]');
+        inputsWithPlaceholders.forEach(input => {
+            const placeholder = input.getAttribute(`data-${lang}-placeholder`);
+            if (placeholder) {
+                input.placeholder = placeholder;
+            }
+        });
+        
+        // Mettre à jour l'attribut lang du document
+        document.documentElement.lang = lang;
+    }
+    
+    // Événement de clic sur le bouton de langue
+    languageToggle.addEventListener('click', () => {
+        const newLang = currentLanguage === 'fr' ? 'en' : 'fr';
+        changeLanguage(newLang);
+    });
+    
+    // Initialiser avec la langue sauvegardée
+    changeLanguage(currentLanguage);
+}
+
 // Gestion du thème sombre/clair
 function toggleTheme() {
     document.body.classList.toggle('dark-theme');
@@ -377,6 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
     preloadCriticalResources();
     
     // Initialiser seulement les fonctionnalités essentielles
+    initLanguageToggle();
     initSimpleNavigation();
     initNotificationSystem();
     

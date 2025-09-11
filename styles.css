@@ -98,6 +98,41 @@ body {
 }
 
 /* Bouton de thème */
+.language-toggle {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.language-btn {
+    background: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.language-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.language-btn i {
+    font-size: 0.8rem;
+}
+
+.current-lang {
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
 .theme-toggle {
     display: flex;
     align-items: center;
