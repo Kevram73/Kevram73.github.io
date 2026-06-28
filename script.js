@@ -95,6 +95,37 @@ function showNotification(message, type = 'info') {
     });
 }
 
+// Navigation mobile
+function initMobileNav() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (!navToggle || !navMenu) return;
+
+    navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active', isOpen);
+        navToggle.setAttribute('aria-expanded', isOpen);
+        navToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
 // Navigation simple pour les liens d'ancrage
 function initSimpleNavigation() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -104,12 +135,8 @@ function initSimpleNavigation() {
             const target = document.querySelector(targetId);
             
             if (target) {
-                const offsetTop = target.offsetTop - 100; // Compenser la hauteur du header
-                
-                // Scroll vers la section
+                const offsetTop = target.offsetTop - 100;
                 window.scrollTo(0, offsetTop);
-                
-                // Mettre à jour l'URL sans recharger la page
                 history.pushState(null, null, targetId);
             }
         });
@@ -117,8 +144,6 @@ function initSimpleNavigation() {
 }
 
 // Pas d'animations de cartes flottantes - affichage normal
-
-// Pas d'effets de parallaxe - scroll normal uniquement
 
 // Pas d'animations de compteurs - affichage normal
 
@@ -158,8 +183,18 @@ function initLanguageToggle() {
             }
         });
         
-        // Mettre à jour l'attribut lang du document
         document.documentElement.lang = lang;
+
+        const metaDescriptions = {
+            fr: "KevramTech est l'entreprise de Ativon Yawo Kevin Eyram (Kevin Eyram), développeur fullstack en France. Applications mobiles, sites web et APIs sur mesure.",
+            en: "KevramTech is the company of Ativon Yawo Kevin Eyram (Kevin Eyram), fullstack developer in France. Custom mobile apps, websites and APIs."
+        };
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', metaDescriptions[lang]);
+
+        document.title = lang === 'fr'
+            ? 'KevramTech | Ativon Yawo Kevin Eyram — Développement Fullstack Mobile & Web'
+            : 'KevramTech | Ativon Yawo Kevin Eyram — Fullstack Mobile & Web Development';
     }
     
     // Événement de clic sur le bouton de langue
@@ -225,21 +260,7 @@ if ('IntersectionObserver' in window) {
 // Gestion des erreurs JavaScript
 window.addEventListener('error', (e) => {
     console.error('Erreur JavaScript:', e.error);
-    // Ici vous pourriez envoyer l'erreur à un service de monitoring
 });
-
-// Service Worker pour le cache (PWA ready)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
 
 // Fonction utilitaire pour le debounce
 function debounce(func, wait) {
@@ -429,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialiser seulement les fonctionnalités essentielles
     initLanguageToggle();
     initSimpleNavigation();
+    initMobileNav();
     initNotificationSystem();
     
     // Ajouter une classe pour indiquer que le JavaScript est chargé

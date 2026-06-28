@@ -83,6 +83,169 @@ body {
     margin: 0;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--gradient-primary);
+    color: white;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-name {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu a {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-dark);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+body.dark-theme .nav-menu a {
+    color: var(--text-dark);
+}
+
+body.dark-theme .hamburger span {
+    background: var(--text-dark);
+}
+
+.hero-brand {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.hero-brand-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: white;
+}
+
+.hero-brand-founder {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.profile-alias {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.footer-bottom a {
+    color: var(--primary-light);
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
 .tagline {
     display: block;
     font-size: 0.85rem;
@@ -920,22 +1083,24 @@ body.dark-theme .tagline {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .hamburger {
-        display: flex;
-    }
-
+@media (max-width: 992px) {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 80px;
         flex-direction: column;
         background-color: white;
         width: 100%;
         text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow);
+        transition: left 0.3s ease;
+        box-shadow: var(--shadow-lg);
         padding: 2rem 0;
+        gap: 0;
+        z-index: 999;
+    }
+
+    body.dark-theme .nav-menu {
+        background-color: var(--bg-dark);
     }
 
     .nav-menu.active {
@@ -943,9 +1108,19 @@ body.dark-theme .tagline {
     }
 
     .nav-menu li {
-        margin: 1rem 0;
+        margin: 0.75rem 0;
     }
 
+    .hamburger {
+        display: flex;
+    }
+
+    .header-controls .contact-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
     .hero-container {
         grid-template-columns: 1fr;
         text-align: center;

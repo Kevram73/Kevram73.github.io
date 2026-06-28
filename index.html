@@ -3,21 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevram Tech - Ativon Yawo Kevin Eyram | Développement Fullstack Mobile & Web</title>
-    <meta name="description" content="Kevram Tech - Ativon Yawo Kevin Eyram, développeur fullstack spécialisé dans les applications mobiles et web. Solutions sur mesure pour votre entreprise.">
+    <title>KevramTech | Ativon Yawo Kevin Eyram — Développement Fullstack Mobile & Web</title>
+    <meta name="description" content="KevramTech est l'entreprise de Ativon Yawo Kevin Eyram (Kevin Eyram), développeur fullstack en France. Applications mobiles, sites web et APIs sur mesure pour entreprises et startups.">
     <meta name="author" content="Ativon Yawo Kevin Eyram">
+    <meta name="keywords" content="KevramTech, Kevram Tech, Ativon Yawo Kevin Eyram, Kevin Eyram, Kevin Ativon, développeur fullstack, développement mobile, développement web, React Native, France">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kevram73.github.io/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kevram73.github.io/">
+    <meta property="og:site_name" content="KevramTech">
+    <meta property="og:title" content="KevramTech | Ativon Yawo Kevin Eyram — Développement Fullstack">
+    <meta property="og:description" content="Entreprise de développement digital fondée par Ativon Yawo Kevin Eyram. Solutions mobiles, web et backend sur mesure.">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="KevramTech | Ativon Yawo Kevin Eyram">
+    <meta name="twitter:description" content="Développement fullstack mobile & web — KevramTech, fondée par Kevin Eyram.">
+    <meta name="twitter:creator" content="@kevram73">
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#1e40af">
+
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://kevram73.github.io/#website",
+                "url": "https://kevram73.github.io/",
+                "name": "KevramTech",
+                "description": "Entreprise de développement fullstack mobile et web",
+                "inLanguage": ["fr-FR", "en-US"],
+                "publisher": { "@id": "https://kevram73.github.io/#organization" }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://kevram73.github.io/#organization",
+                "name": "KevramTech",
+                "alternateName": ["Kevram Tech", "Kevram73"],
+                "url": "https://kevram73.github.io/",
+                "logo": "https://kevram73.github.io/favicon.svg",
+                "founder": { "@id": "https://kevram73.github.io/#person" },
+                "email": "eyramativon1@gmail.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "FR"
+                },
+                "sameAs": [
+                    "https://github.com/kevram73",
+                    "https://linkedin.com/in/kevin-ativon-yawo-724622294"
+                ]
+            },
+            {
+                "@type": "Person",
+                "@id": "https://kevram73.github.io/#person",
+                "name": "Ativon Yawo Kevin Eyram",
+                "alternateName": ["Kevin Eyram", "Kevin Ativon Yawo", "Kevram73"],
+                "jobTitle": "Développeur Fullstack & Fondateur de KevramTech",
+                "worksFor": { "@id": "https://kevram73.github.io/#organization" },
+                "url": "https://kevram73.github.io/",
+                "email": "eyramativon1@gmail.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "FR"
+                },
+                "sameAs": [
+                    "https://github.com/kevram73",
+                    "https://linkedin.com/in/kevin-ativon-yawo-724622294"
+                ],
+                "knowsAbout": ["Développement mobile", "Développement web", "React Native", "Node.js", "TypeScript"]
+            },
+            {
+                "@type": "ProfessionalService",
+                "@id": "https://kevram73.github.io/#service",
+                "name": "KevramTech — Services de développement digital",
+                "provider": { "@id": "https://kevram73.github.io/#organization" },
+                "areaServed": "FR",
+                "serviceType": ["Développement mobile", "Développement web", "Backend & API", "UI/UX Design"]
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <!-- Header Professionnel -->
     <header class="header">
         <div class="header-container">
-            <div class="logo">
-                <h1>Kevram Tech</h1>
-                <span class="tagline" data-fr="Solutions Digitales Innovantes" data-en="Innovative Digital Solutions">Solutions Digitales Innovantes</span>
-            </div>
+            <a href="#accueil" class="logo" aria-label="KevramTech — Accueil">
+                <div class="logo-mark" aria-hidden="true">KT</div>
+                <div class="logo-text">
+                    <span class="logo-name">KevramTech</span>
+                    <span class="tagline" data-fr="par Ativon Yawo Kevin Eyram" data-en="by Ativon Yawo Kevin Eyram">par Ativon Yawo Kevin Eyram</span>
+                </div>
+            </a>
+            <nav class="nav" aria-label="Navigation principale">
+                <button class="hamburger" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#accueil" data-fr="Accueil" data-en="Home">Accueil</a></li>
+                    <li><a href="#services" data-fr="Services" data-en="Services">Services</a></li>
+                    <li><a href="#apropos" data-fr="À propos" data-en="About">À propos</a></li>
+                    <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+                </ul>
+            </nav>
             <div class="header-controls">
                 <div class="language-toggle">
                     <button id="language-toggle" class="language-btn">
@@ -41,13 +143,17 @@
     <section id="accueil" class="hero">
         <div class="hero-container">
             <div class="hero-content">
+                <div class="hero-brand">
+                    <span class="hero-brand-name">KevramTech</span>
+                    <span class="hero-brand-founder" data-fr="Fondée par Ativon Yawo Kevin Eyram" data-en="Founded by Ativon Yawo Kevin Eyram">Fondée par Ativon Yawo Kevin Eyram</span>
+                </div>
                 <h1 class="hero-title">
                     <span data-fr="Solutions Digitales" data-en="Digital Solutions">Solutions Digitales</span> <span class="highlight" data-fr="Innovantes" data-en="Innovative">Innovantes</span>
                 </h1>
                 <p class="hero-description">
-                    <span data-fr="Développeur fullstack spécialisé dans la création d'applications mobiles et web sur mesure." data-en="Fullstack developer specialized in creating custom mobile and web applications.">Développeur fullstack spécialisé dans la création d'applications mobiles et web sur mesure.</span>
+                    <span data-fr="KevramTech accompagne entreprises et startups dans la création d'applications mobiles, de sites web et d'APIs performantes." data-en="KevramTech helps businesses and startups build high-performance mobile apps, websites and APIs.">KevramTech accompagne entreprises et startups dans la création d'applications mobiles, de sites web et d'APIs performantes.</span>
                     <br>
-                    <span data-fr="Transformons vos idées en solutions digitales performantes." data-en="Let's transform your ideas into high-performance digital solutions.">Transformons vos idées en solutions digitales performantes.</span>
+                    <span data-fr="Expertise fullstack de Kevin Eyram — de l'idée à la mise en production." data-en="Fullstack expertise by Kevin Eyram — from idea to production.">Expertise fullstack de Kevin Eyram — de l'idée à la mise en production.</span>
                 </p>
                 <div class="hero-buttons">
                     <a href="#services" class="btn btn-primary" data-fr="Nos Services" data-en="Our Services">Nos Services</a>
@@ -314,19 +420,22 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-badge" data-fr="À propos" data-en="About">À propos</div>
-                <h2 class="section-title" data-fr="Développeur Fullstack Passionné" data-en="Passionate Fullstack Developer">Développeur Fullstack Passionné</h2>
-                <p class="section-description" data-fr="Transformons ensemble vos idées en solutions digitales innovantes" data-en="Let's transform your ideas into innovative digital solutions together">
-                    Transformons ensemble vos idées en solutions digitales innovantes
+                <h2 class="section-title" data-fr="KevramTech & Kevin Eyram" data-en="KevramTech & Kevin Eyram">KevramTech & Kevin Eyram</h2>
+                <p class="section-description" data-fr="L'entreprise KevramTech est le prolongement de la passion de Ativon Yawo Kevin Eyram pour l'innovation technologique" data-en="KevramTech is the extension of Ativon Yawo Kevin Eyram's passion for technological innovation">
+                    L'entreprise KevramTech est le prolongement de la passion de Ativon Yawo Kevin Eyram pour l'innovation technologique
                 </p>
             </div>
             <div class="about-content">
                 <div class="about-text">
                     <div class="about-intro">
-                        <h3 data-fr="Bonjour, je suis" data-en="Hello, I am">Bonjour, je suis <span class="highlight-name">Ativon Yawo Kevin Eyram</span></h3>
-                        <p data-fr="Passionné par l'innovation technologique, je me spécialise dans le développement d'applications mobiles et web de haute qualité. Avec une expertise fullstack, je transforme vos idées en solutions digitales performantes et évolutives." data-en="Passionate about technological innovation, I specialize in developing high-quality mobile and web applications. With fullstack expertise, I transform your ideas into high-performance and scalable digital solutions.">
-                            Passionné par l'innovation technologique, je me spécialise dans le développement 
-                            d'applications mobiles et web de haute qualité. Avec une expertise fullstack, 
-                            je transforme vos idées en solutions digitales performantes et évolutives.
+                        <h3>
+                            <span data-fr="Bonjour, je suis" data-en="Hello, I am">Bonjour, je suis</span>
+                            <span class="highlight-name"> Ativon Yawo Kevin Eyram</span>
+                        </h3>
+                        <p data-fr="Fondateur de KevramTech, je suis Ativon Yawo Kevin Eyram — développeur fullstack basé en France. Sous la marque KevramTech, je conçois et développe des applications mobiles, des sites web et des backends robustes pour des clients exigeants." data-en="As the founder of KevramTech, I am Ativon Yawo Kevin Eyram — a fullstack developer based in France. Under the KevramTech brand, I design and build mobile apps, websites and robust backends for demanding clients.">
+                            Fondateur de KevramTech, je suis Ativon Yawo Kevin Eyram — développeur fullstack basé en France.
+                            Sous la marque KevramTech, je conçois et développe des applications mobiles, des sites web
+                            et des backends robustes pour des clients exigeants.
                         </p>
                     </div>
                     <div class="about-approach">
@@ -383,7 +492,8 @@
                         </div>
                         <div class="profile-info">
                             <h4 style="color: black;">Ativon Yawo Kevin Eyram</h4>
-                            <p style="color: black;">Développeur Fullstack</p>
+                            <p style="color: black;">Fondateur — KevramTech</p>
+                            <p class="profile-alias" style="color: #64748b;">Kevin Eyram · Développeur Fullstack</p>
                             <div class="profile-links">
                                 <a href="https://github.com/kevram73" target="_blank">
                                     <i class="fab fa-github"></i>
@@ -500,13 +610,22 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Kevram Tech</h3>
-                    <p>Votre partenaire de confiance pour le développement digital.</p>
+                    <h3>KevramTech</h3>
+                    <p>Entreprise de développement digital fondée par <strong>Ativon Yawo Kevin Eyram</strong> (Kevin Eyram). Votre partenaire de confiance pour le mobile, le web et le backend.</p>
                     <div class="social-links">
                         <a href="https://github.com/kevram73" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
                         <a href="mailto:eyramativon1@gmail.com"><i class="fas fa-envelope"></i></a>
                         <a href="https://linkedin.com/in/kevin-ativon-yawo-724622294" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
                     </div>
+                </div>
+                <div class="footer-section">
+                    <h4 data-fr="Entreprise" data-en="Company">Entreprise</h4>
+                    <ul>
+                        <li><a href="#apropos">Ativon Yawo Kevin Eyram</a></li>
+                        <li><a href="#apropos">KevramTech</a></li>
+                        <li><a href="https://github.com/kevram73" target="_blank" rel="noopener noreferrer">GitHub — kevram73</a></li>
+                        <li><a href="https://linkedin.com/in/kevin-ativon-yawo-724622294" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Services</h4>
@@ -529,8 +648,8 @@
             </div>
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
-                    <p>&copy; 2024 Kevram Tech. Tous droits réservés.</p>
-                    <p>Développé avec ❤️ par <strong>Ativon Yawo Kevin Eyram</strong></p>
+                    <p>&copy; 2026 KevramTech. Tous droits réservés.</p>
+                    <p>Fondé et développé par <strong>Ativon Yawo Kevin Eyram</strong> — <a href="https://github.com/kevram73" target="_blank" rel="noopener noreferrer">kevram73</a></p>
                 </div>
             </div>
         </div>
