@@ -3,545 +3,494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kevram Tech - Ativon Yawo Kevin Eyram | Développement Fullstack Mobile & Web</title>
-    <meta name="description" content="Kevram Tech - Ativon Yawo Kevin Eyram, développeur fullstack spécialisé dans les applications mobiles et web. Solutions sur mesure pour votre entreprise.">
-    <meta name="author" content="Ativon Yawo Kevin Eyram">
+    <title>Kevin Eyram ATIVON — Ingénieur logiciel full-stack</title>
+    <meta name="description" content="Kevin Eyram ATIVON — Ingénieur logiciel full-stack web et mobile. Lead Developer, Laravel, Flutter, .NET, Python, pipelines IA/OCR. Accra · Lomé · Remote.">
+    <meta name="author" content="Kevin Eyram ATIVON">
+    <meta name="theme-color" content="#06060b">
+    <meta property="og:title" content="Kevin Eyram ATIVON — Ingénieur logiciel full-stack">
+    <meta property="og:description" content="Web, mobile et IA — de l'expression de besoin jusqu'au CI/CD.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235eead4'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2306060b'/%3E%3Ctext x='32' y='44' font-family='Arial' font-weight='700' font-size='34' text-anchor='middle' fill='url(%23g)'%3EK%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-    <!-- Header Professionnel -->
-    <header class="header">
-        <div class="header-container">
-            <div class="logo">
-                <h1>Kevram Tech</h1>
-                <span class="tagline" data-fr="Solutions Digitales Innovantes" data-en="Innovative Digital Solutions">Solutions Digitales Innovantes</span>
-            </div>
-            <div class="header-controls">
-                <div class="language-toggle">
-                    <button id="language-toggle" class="language-btn">
-                        <i class="fas fa-globe"></i>
-                        <span class="current-lang">FR</span>
-                    </button>
-                </div>
-                <div class="theme-toggle">
-                    <button id="theme-toggle" class="theme-btn">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
-                <div class="contact-btn">
-                    <a href="#contact" class="btn btn-primary" data-fr="Contact" data-en="Contact">Contact</a>
-                </div>
-            </div>
+    <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader-inner">
+            <span class="loader-name">kevram<span>.</span>tech</span>
+            <span class="loader-count"><span id="loader-count">0</span>%</span>
+        </div>
+        <div class="loader-bar"><span id="loader-bar"></span></div>
+    </div>
+
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+    <div class="hud" aria-hidden="true">
+        <div class="hud-left">
+            <span class="hud-index" id="hud-index">01</span>
+            <span class="hud-line"></span>
+            <span id="hud-label">Sphère</span>
+        </div>
+        <div class="hud-right">
+            <span id="hud-coords">x 0.00 · y 0.00</span>
+            <span class="hud-hint" data-en="click to send a wave">cliquez pour une onde</span>
+        </div>
+    </div>
+
+    <header class="nav" id="nav">
+        <a href="#top" class="brand" aria-label="Accueil">
+            <span class="brand-mark">K</span>
+            <span class="brand-name">kevram<span class="dot">.</span>tech</span>
+        </a>
+        <nav class="nav-links" id="nav-links">
+            <a href="#about" data-en="Profile">Profil</a>
+            <a href="#experience" data-en="Experience">Parcours</a>
+            <a href="#projects" data-en="Projects">Projets</a>
+            <a href="#skills" data-en="Stack">Stack</a>
+            <a href="#contact" class="nav-cta" data-en="Contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <button class="lang-btn" id="lang-btn" type="button" aria-label="Changer de langue / Switch language">
+                <span data-lang="fr">FR</span><span data-lang="en">EN</span>
+            </button>
+            <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- Section Hero -->
-    <section id="accueil" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
+    <main>
+        <!-- Hero -->
+        <section class="hero" id="top" data-shape="0" data-x="1.9">
+            <div class="container hero-inner">
+                <p class="eyebrow"><span class="pulse"></span><span data-en="Available for new projects">Disponible pour de nouveaux projets</span></p>
                 <h1 class="hero-title">
-                    <span data-fr="Solutions Digitales" data-en="Digital Solutions">Solutions Digitales</span> <span class="highlight" data-fr="Innovantes" data-en="Innovative">Innovantes</span>
+                    <span class="line"><span class="line-inner" data-scramble>Kevin Eyram</span></span>
+                    <span class="line"><span class="line-inner grad" data-scramble>ATIVON</span></span>
                 </h1>
-                <p class="hero-description">
-                    <span data-fr="Développeur fullstack spécialisé dans la création d'applications mobiles et web sur mesure." data-en="Fullstack developer specialized in creating custom mobile and web applications.">Développeur fullstack spécialisé dans la création d'applications mobiles et web sur mesure.</span>
-                    <br>
-                    <span data-fr="Transformons vos idées en solutions digitales performantes." data-en="Let's transform your ideas into high-performance digital solutions.">Transformons vos idées en solutions digitales performantes.</span>
+                <p class="hero-role">
+                    <span data-en="Software engineer">Ingénieur logiciel</span>
+                    <span class="sep">/</span>
+                    <span class="rotator" id="rotator">Full-stack web &amp; mobile</span>
                 </p>
-                <div class="hero-buttons">
-                    <a href="#services" class="btn btn-primary" data-fr="Nos Services" data-en="Our Services">Nos Services</a>
-                    <a href="#contact" class="btn btn-secondary" data-fr="Contact" data-en="Contact">Contact</a>
+                <p class="hero-lead" data-en="I design and ship web, mobile and AI products — from the first requirement to CI/CD. Lead Developer at Metasis Media.">
+                    Je conçois et livre des produits web, mobiles et IA — de l'expression de besoin jusqu'au CI/CD. Lead Developer chez Metasis Media.
+                </p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary"><span data-en="See my work">Voir mes projets</span><i class="fa-solid fa-arrow-down"></i></a>
+                    <a href="#contact" class="btn btn-ghost"><span data-en="Let's talk">Discutons</span><i class="fa-solid fa-arrow-right"></i></a>
                 </div>
+                <ul class="hero-meta">
+                    <li><i class="fa-solid fa-location-dot"></i>Accra · Lomé · Remote</li>
+                    <li><a href="https://github.com/Kevram73" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i>Kevram73</a></li>
+                    <li><a href="https://www.linkedin.com/in/kevin-eyram-ativon-5686a1217" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i>LinkedIn</a></li>
+                </ul>
             </div>
-            <div class="hero-image">
-                <div class="floating-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <span>Mobile</span>
-                </div>
-                <div class="floating-card">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>Web</span>
-                </div>
-                <div class="floating-card">
-                    <i class="fas fa-code"></i>
-                    <span>Backend</span>
-                </div>
-            </div>
-        </div>
-    </section>
+            <a href="#about" class="scroll-hint" aria-label="Défiler vers le profil"><span></span></a>
+        </section>
 
-    <!-- Section Services -->
-    <section id="services" class="services">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-badge" data-fr="Services" data-en="Services">Services</div>
-                <h2 class="section-title" data-fr="Solutions Digitales Complètes" data-en="Complete Digital Solutions">Solutions Digitales Complètes</h2>
-                <p class="section-description" data-fr="De la conception à la mise en production, nous transformons vos idées en solutions digitales performantes" data-en="From conception to production, we transform your ideas into high-performance digital solutions">
-                    De la conception à la mise en production, nous transformons vos idées en solutions digitales performantes
-                </p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-header">
-                        <div class="service-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <div class="service-number" style="color: black;">01</div>
-                    </div>
-                    <div class="service-content">
-                        <h3 style="color: black;" data-fr="Développement Mobile" data-en="Mobile Development">Développement Mobile</h3>
-                        <p style="color: black;" data-fr="Applications iOS et Android natives et cross-platform avec les dernières technologies" data-en="Native and cross-platform iOS and Android applications with the latest technologies">Applications iOS et Android natives et cross-platform avec les dernières technologies</p>
-                        <div class="service-features">
-                            <span class="feature-tag">React Native</span>
-                            <span class="feature-tag">Flutter</span>
-                            <span class="feature-tag">Swift</span>
-                            <span class="feature-tag">Kotlin</span>
-                        </div>
-                    </div>
+        <!-- Profil -->
+        <section class="section" id="about" data-shape="1" data-x="-2.4">
+            <div class="container about-grid">
+                <div class="about-head reveal">
+                    <p class="kicker"><span>01</span><span data-en="Profile">Profil</span></p>
+                    <h2 class="section-title" data-en="From business need<br>to <em>production</em>.">Du besoin métier<br>à la <em>production</em>.</h2>
                 </div>
-                <div class="service-card">
-                    <div class="service-header">
-                        <div class="service-icon">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                        <div class="service-number" style="color: black;">02</div>
-                    </div>
-                    <div class="service-content">
-                        <h3 style="color: black;" data-fr="Développement Web" data-en="Web Development">Développement Web</h3>
-                        <p style="color: black;" data-fr="Sites web et applications web modernes, rapides et sécurisées" data-en="Modern, fast and secure websites and web applications">Sites web et applications web modernes, rapides et sécurisées</p>
-                        <div class="service-features">
-                            <span class="feature-tag">React</span>
-                            <span class="feature-tag">Vue.js</span>
-                            <span class="feature-tag">Next.js</span>
-                            <span class="feature-tag">TypeScript</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-header">
-                        <div class="service-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="service-number" style="color: black;">03</div>
-                    </div>
-                    <div class="service-content">
-                        <h3 style="color: black;" data-fr="Backend & API" data-en="Backend & API">Backend & API</h3>
-                        <p style="color: black;" data-fr="Architecture backend robuste et APIs performantes pour vos applications" data-en="Robust backend architecture and high-performance APIs for your applications">Architecture backend robuste et APIs performantes pour vos applications</p>
-                        <div class="service-features">
-                            <span class="feature-tag">Node.js</span>
-                            <span class="feature-tag">Python</span>
-                            <span class="feature-tag">GraphQL</span>
-                            <span class="feature-tag">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-header">
-                        <div class="service-icon">
-                            <i class="fas fa-palette"></i>
-                        </div>
-                        <div style="color: black;" class="service-number">04</div>
-                    </div>
-                    <div class="service-content">
-                        <h3 style="color: black;" data-fr="UI/UX Design" data-en="UI/UX Design">UI/UX Design</h3>
-                        <p style="color: black;" data-fr="Design d'interface utilisateur moderne et expérience utilisateur optimisée" data-en="Modern user interface design and optimized user experience">Design d'interface utilisateur moderne et expérience utilisateur optimisée</p>
-                        <div class="service-features">
-                            <span class="feature-tag">Figma</span>
-                            <span class="feature-tag">Prototypage</span>
-                            <span class="feature-tag">Design System</span>
-                            <span class="feature-tag">Accessibilité</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Technologies -->
-    <section class="technologies">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-badge" data-fr="Technologies" data-en="Technologies">Technologies</div>
-                <h2 class="section-title" data-fr="Stack Technologique Moderne" data-en="Modern Technology Stack">Stack Technologique Moderne</h2>
-                <p class="section-description" data-fr="Nous utilisons les dernières technologies pour créer des solutions performantes et évolutives" data-en="We use the latest technologies to create high-performance and scalable solutions">
-                    Nous utilisons les dernières technologies pour créer des solutions performantes et évolutives
-                </p>
-            </div>
-            <div class="tech-showcase">
-                <div class="tech-category">
-                    <div class="tech-category-header">
-                        <div class="tech-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3 data-fr="Frontend" data-en="Frontend">Frontend</h3>
-                    </div>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-name">React</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Vue.js</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">TypeScript</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Next.js</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <div class="tech-category-header">
-                        <div class="tech-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3 data-fr="Mobile" data-en="Mobile">Mobile</h3>
-                    </div>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-name">React Native</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Flutter</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Swift</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 80%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Kotlin</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <div class="tech-category-header">
-                        <div class="tech-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <h3 data-fr="Backend" data-en="Backend">Backend</h3>
-                    </div>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-name">Node.js</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Python</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">GraphQL</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">MongoDB</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <div class="tech-category-header">
-                        <div class="tech-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3>Outils & DevOps</h3>
-                    </div>
-                    <div class="tech-items">
-                        <div class="tech-item">
-                            <span class="tech-name">Git</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Docker</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">Linux</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <span class="tech-name">CI/CD</span>
-                            <div class="tech-level">
-                                <div class="tech-bar" style="width: 90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section À propos -->
-    <section id="apropos" class="about">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-badge" data-fr="À propos" data-en="About">À propos</div>
-                <h2 class="section-title" data-fr="Développeur Fullstack Passionné" data-en="Passionate Fullstack Developer">Développeur Fullstack Passionné</h2>
-                <p class="section-description" data-fr="Transformons ensemble vos idées en solutions digitales innovantes" data-en="Let's transform your ideas into innovative digital solutions together">
-                    Transformons ensemble vos idées en solutions digitales innovantes
-                </p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <div class="about-intro">
-                        <h3 data-fr="Bonjour, je suis" data-en="Hello, I am">Bonjour, je suis <span class="highlight-name">Ativon Yawo Kevin Eyram</span></h3>
-                        <p data-fr="Passionné par l'innovation technologique, je me spécialise dans le développement d'applications mobiles et web de haute qualité. Avec une expertise fullstack, je transforme vos idées en solutions digitales performantes et évolutives." data-en="Passionate about technological innovation, I specialize in developing high-quality mobile and web applications. With fullstack expertise, I transform your ideas into high-performance and scalable digital solutions.">
-                            Passionné par l'innovation technologique, je me spécialise dans le développement 
-                            d'applications mobiles et web de haute qualité. Avec une expertise fullstack, 
-                            je transforme vos idées en solutions digitales performantes et évolutives.
-                        </p>
-                    </div>
-                    <div class="about-approach">
-                        <h4 data-fr="Mon Approche" data-en="My Approach">Mon Approche</h4>
-                        <div class="approach-items">
-                            <div class="approach-item">
-                                <div class="approach-icon">
-                                    <i class="fas fa-lightbulb"></i>
-                                </div>
-                                <div class="approach-content">
-                                    <h5>Innovation</h5>
-                                    <p>Utilisation des dernières technologies pour des solutions modernes</p>
-                                </div>
-                            </div>
-                            <div class="approach-item">
-                                <div class="approach-icon">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <div class="approach-content">
-                                    <h5>Qualité</h5>
-                                    <p>Code propre, maintenable et suivant les meilleures pratiques</p>
-                                </div>
-                            </div>
-                            <div class="approach-item">
-                                <div class="approach-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <div class="approach-content">
-                                    <h5>Collaboration</h5>
-                                    <p>Écoute active et communication transparente tout au long du projet</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="panel about-body reveal">
+                    <p class="lead" data-en="Full-stack software engineer with <strong>5+ years of experience</strong>. I lead <strong>Integrator</strong> at Metasis Media (.NET, Vue.js, SQL Server, Azure) and build machine-learning pipelines for documents.">
+                        Ingénieur logiciel full-stack avec <strong>plus de 5 ans d'expérience</strong>. Je pilote <strong>Integrator</strong> chez Metasis Media (.NET, Vue.js, SQL Server, Azure) et des pipelines de machine learning pour les documents.
+                    </p>
+                    <p data-en="I design Laravel / Flutter SaaS products, Python APIs (Flask, FastAPI), OCR workflows and payment integrations (Mobile Money, payment gateways). I take projects all the way: specs, architecture, development, deployment and CI/CD.">
+                        Je conçois des SaaS Laravel / Flutter, des API Python (Flask, FastAPI), des workflows OCR et des intégrations de paiement (Mobile Money, passerelles). Je mène les projets de bout en bout : cadrage, architecture, développement, mise en production et CI/CD.
+                    </p>
                     <div class="stats">
-                        <div class="stat">
-                            <div class="stat-number">50+</div>
-                            <div class="stat-label">Projets réalisés</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">3+</div>
-                            <div class="stat-label">Années d'expérience</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Clients satisfaits</div>
-                        </div>
+                        <div class="stat"><span class="num"><span data-count="5">5</span>+</span><span class="label" data-en="years of experience">ans d'expérience</span></div>
+                        <div class="stat"><span class="num"><span data-count="15">15</span>+</span><span class="label" data-en="products shipped">produits livrés</span></div>
+                        <div class="stat"><span class="num"><span data-count="8">8</span></span><span class="label" data-en="languages in production">langages en production</span></div>
+                        <div class="stat"><span class="num">FR·EN</span><span class="label" data-en="fluent">courant</span></div>
                     </div>
                 </div>
-                <div class="about-visual">
-                    <div class="profile-card">
-                        <div class="profile-image">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <div class="profile-info">
-                            <h4 style="color: black;">Ativon Yawo Kevin Eyram</h4>
-                            <p style="color: black;">Développeur Fullstack</p>
-                            <div class="profile-links">
-                                <a href="https://github.com/kevram73" target="_blank">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="mailto:eyramativon1@gmail.com">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                                <a href="https://linkedin.com/in/kevin-ativon-yawo-724622294" target="_blank">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+        </section>
+
+        <!-- Parcours -->
+        <section class="section" id="experience" data-shape="2" data-x="3">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker"><span>02</span><span data-en="Experience">Parcours</span></p>
+                    <h2 class="section-title" data-en="Where I've <em>built</em>.">Là où j'ai <em>construit</em>.</h2>
+                </div>
+
+                <ol class="timeline">
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2024 — <span data-en="Present">Présent</span></div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3>Lead Developer</h3>
+                                <p class="tl-org">Metasis Media <span>· Remote, <span data-en="United States">États-Unis</span></span></p>
+                            </header>
+                            <ul>
+                                <li data-en="Leading Integrator: Vue.js docs/prototypes, .NET MAUI mobile, SQL Server (T-SQL), Docker and Azure DevOps.">Pilotage d'Integrator : documentation et prototypes Vue.js, mobile .NET MAUI, SQL Server (T-SQL), Docker et Azure DevOps.</li>
+                                <li data-en="Machine-learning pipelines to extract, classify and manage documents in production.">Pipelines de machine learning pour extraire, classifier et gérer des documents en production.</li>
+                                <li data-en="Python file-processing services and .NET web/desktop clients hosted on Azure.">Services Python de traitement de fichiers et clients web/desktop .NET hébergés sur Azure.</li>
+                            </ul>
+                            <div class="tags"><span>.NET</span><span>Vue.js</span><span>.NET MAUI</span><span>SQL Server</span><span>Azure</span><span>ML</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2025 — <span data-en="Present">Présent</span></div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3 data-en="Software Engineer">Ingénieur logiciel</h3>
+                                <p class="tl-org">LGI Consulting <span>· Lomé / Remote</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="Lotus ERP suite in Flask (core, payroll, HR, accounting) with TypeScript/React frontends.">Suite ERP Lotus en Flask (cœur, paie, RH, compta) avec frontends TypeScript/React.</li>
+                                <li data-en="lotus-scan: local OCR pipeline (PaddleOCR + Ollama vision) turning handwritten documents into Excel/PDF.">lotus-scan : pipeline OCR local (PaddleOCR + Ollama vision) qui transforme des documents manuscrits en Excel/PDF.</li>
+                                <li data-en="Payroll API (CNSS, IRPP) and a Flutter + Flask e-commerce stack (PQV Market, PostgreSQL, Docker).">API de paie (CNSS, IRPP) et stack e-commerce Flutter + Flask (PQV Market, PostgreSQL, Docker).</li>
+                            </ul>
+                            <div class="tags"><span>Flask</span><span>React</span><span>TypeScript</span><span>PaddleOCR</span><span>Ollama</span><span>PostgreSQL</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2024 — 2025</div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3 data-en="Software Developer">Développeur logiciel</h3>
+                                <p class="tl-org">BHK Konsulting <span>· Lomé</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="UNICHECK: Flutter check-in/out app to track university lecturers.">UNICHECK : application Flutter de check-in/out pour le suivi des professeurs d'université.</li>
+                                <li data-en="E-SOTRAL: Flutter ticketing app (purchase, history, claims, SOS) with Firebase and GetX.">E-SOTRAL : app Flutter de billettique (achat, historique, réclamations, SOS) avec Firebase et GetX.</li>
+                                <li data-en="Connected the mobile clients to existing backends for SOTRAL's digital transformation.">Intégration des clients mobiles aux backends existants pour la digitalisation de la SOTRAL.</li>
+                            </ul>
+                            <div class="tags"><span>Flutter</span><span>Firebase</span><span>GetX</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2024 — 2025</div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3 data-en="Software Engineer">Ingénieur logiciel</h3>
+                                <p class="tl-org">PayGate Consulting LLC <span>· Lomé</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="Payment gateway integrations for financial-services clients (checkout redirects, widgets).">Intégrations de passerelles de paiement pour des clients des services financiers (redirections checkout, widgets).</li>
+                                <li data-en="Secured payment flows and wired APIs between merchant sites and the PayGate stack.">Sécurisation des flux d'encaissement et branchement d'API entre sites marchands et la stack PayGate.</li>
+                            </ul>
+                            <div class="tags"><span>Payments</span><span>API</span><span data-en="Security">Sécurité</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2022 — <span data-en="Present">Présent</span></div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3>Lead Developer — Laravel / Flutter</h3>
+                                <p class="tl-org">Spark Corporation Ltda. <span>· Lomé</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="Led the dry-cleaning SaaS products (pressingelegance.com, sparkpressing) through to production.">Pilotage des SaaS de pressing (pressingelegance.com, sparkpressing) jusqu'à la mise en production.</li>
+                                <li data-en="Backend and Next.js frontend of devistravauximmo.com (renovation quotes and estimates).">Backend et frontend Next.js de devistravauximmo.com (devis et estimation de travaux).</li>
+                                <li data-en="CentralResource (Laravel API + Flutter Android/iOS) and Laravel sites (work4connect, staffinglatincompany).">CentralResource (API Laravel + Flutter Android/iOS) et sites Laravel (work4connect, staffinglatincompany).</li>
+                            </ul>
+                            <div class="tags"><span>Laravel</span><span>Flutter</span><span>Next.js</span><span>SaaS</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2022 — <span data-en="Present">Présent</span></div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3 data-en="Founder / Freelance full-stack developer">Fondateur / Développeur full-stack freelance</h3>
+                                <p class="tl-org">Kevram-Tech <span>· Accra / Lomé / Remote</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="GloShop: Laravel e-commerce API + Flutter customer/admin apps, CI/CD with GitHub Actions.">GloShop : API e-commerce Laravel + apps Flutter client/admin, CI/CD GitHub Actions.</li>
+                                <li data-en="E6Wash: multi-tenant dry-cleaning SaaS (TypeScript) with Flutter apps for customers and collectors (QR, Mobile Money).">E6Wash : SaaS multi-tenant de pressing (TypeScript) avec apps Flutter clients/collecteurs (QR, Mobile Money).</li>
+                                <li data-en="Yoogo: Flask delivery API + Flutter apps; PretConnect (loans); Pulse-AI (health).">Yoogo : API Flask de livraison + apps Flutter ; PretConnect (prêts) ; Pulse-AI (santé).</li>
+                                <li data-en="Potentia Technologies website: Express.js + MongoDB API and React/Next.js UI, team of 3.">Site Potentia Technologies : API Express.js + MongoDB et UI React/Next.js, équipe de 3.</li>
+                            </ul>
+                            <div class="tags"><span>TypeScript</span><span>Laravel</span><span>Flask</span><span>Flutter</span><span>Mobile Money</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2023</div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3 data-en="Python Developer (Flask)">Développeur Python (Flask)</h3>
+                                <p class="tl-org">CENI — <span data-en="National Data Processing Centre">Centre National de Traitement des Données</span> <span>· Lomé</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="Flask REST API centralising voting data from multiple sources.">API REST Flask pour centraliser les données de vote provenant de plusieurs sources.</li>
+                                <li data-en="Secure vote aggregation, built for reliability, transparency and scale.">Agrégation sécurisée des votes, avec un objectif de fiabilité, de transparence et de montée en charge.</li>
+                            </ul>
+                            <div class="tags"><span>Python</span><span>Flask</span><span>REST</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2021 — 2022</div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3 data-en="Flutter Developer">Développeur Flutter</h3>
+                                <p class="tl-org">Aluksons Business Solutions Ltd. <span>· Lomé</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="MicroFinancePro: Android and iOS app from a single Flutter codebase.">MicroFinancePro : application Android et iOS à partir d'une seule base de code Flutter.</li>
+                                <li data-en="REST API integration; Scrum delivery with Azure DevOps CI/CD.">Intégration d'API REST ; livraisons en Scrum et CI/CD Azure DevOps.</li>
+                            </ul>
+                            <div class="tags"><span>Flutter</span><span>Azure DevOps</span><span>Scrum</span></div>
+                        </article>
+                    </li>
+
+                    <li class="tl-item reveal">
+                        <div class="tl-date">2020 — 2021</div>
+                        <article class="tl-card panel">
+                            <header>
+                                <h3 data-en="Web Developer">Développeur web</h3>
+                                <p class="tl-org">Spark Corporation Ltda. <span>· Lomé</span></p>
+                            </header>
+                            <ul>
+                                <li data-en="Laravel and WordPress sites; CI/CD from GitHub Actions to cPanel.">Sites Laravel et WordPress ; CI/CD GitHub Actions vers cPanel.</li>
+                                <li data-en="CentralResource API and the first Android/iOS clients.">API CentralResource et premiers clients Android/iOS.</li>
+                            </ul>
+                            <div class="tags"><span>Laravel</span><span>WordPress</span><span>GitHub Actions</span></div>
+                        </article>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Projets -->
+        <section class="section" id="projects" data-shape="3" data-x="0">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker"><span>03</span><span data-en="Selected work">Projets choisis</span></p>
+                    <h2 class="section-title" data-en="Products running <em>in production</em>.">Des produits <em>en production</em>.</h2>
+                </div>
+
+                <div class="projects">
+                    <article class="project panel reveal">
+                        <div class="project-top"><span class="project-cat" data-en="Platform · ML">Plateforme · ML</span><i class="fa-solid fa-diagram-project"></i></div>
+                        <h3>Integrator</h3>
+                        <p data-en="Metasis Media's integration platform: .NET web/desktop clients, .NET MAUI mobile and ML pipelines that extract and classify documents.">Plateforme d'intégration de Metasis Media : clients web/desktop .NET, mobile .NET MAUI et pipelines ML qui extraient et classifient les documents.</p>
+                        <div class="tags"><span>.NET</span><span>Vue.js</span><span>SQL Server</span><span>Azure</span></div>
+                    </article>
+
+                    <article class="project panel reveal">
+                        <div class="project-top"><span class="project-cat" data-en="ERP · OCR">ERP · OCR</span><i class="fa-solid fa-file-lines"></i></div>
+                        <h3>Lotus ERP &amp; lotus-scan</h3>
+                        <p data-en="Modular ERP (payroll, HR, accounting) and a fully local OCR pipeline that turns handwritten documents into Excel and PDF.">ERP modulaire (paie, RH, compta) et pipeline OCR 100 % local qui transforme des documents manuscrits en Excel et PDF.</p>
+                        <div class="tags"><span>Flask</span><span>React</span><span>PaddleOCR</span><span>Ollama</span></div>
+                    </article>
+
+                    <article class="project panel reveal">
+                        <div class="project-top"><span class="project-cat">SaaS · Mobile Money</span><i class="fa-solid fa-shirt"></i></div>
+                        <h3>E6Wash</h3>
+                        <p data-en="Multi-tenant dry-cleaning SaaS with Flutter apps for customers and collectors, QR tracking and Mobile Money payments.">SaaS multi-tenant de pressing avec apps Flutter pour clients et collecteurs, suivi par QR et paiement Mobile Money.</p>
+                        <div class="tags"><span>TypeScript</span><span>Flutter</span><span>QR</span></div>
+                    </article>
+
+                    <article class="project panel reveal">
+                        <div class="project-top"><span class="project-cat" data-en="Mobility">Mobilité</span><i class="fa-solid fa-bus"></i></div>
+                        <h3>E-SOTRAL</h3>
+                        <p data-en="Ticketing app for Lomé's public transport: ticket purchase, history, claims and an SOS button.">Billettique pour les transports publics de Lomé : achat de tickets, historique, réclamations et bouton SOS.</p>
+                        <div class="tags"><span>Flutter</span><span>Firebase</span><span>GetX</span></div>
+                    </article>
+
+                    <article class="project panel reveal">
+                        <div class="project-top"><span class="project-cat">E-commerce</span><i class="fa-solid fa-bag-shopping"></i></div>
+                        <h3>GloShop</h3>
+                        <p data-en="Laravel e-commerce API with Flutter customer and admin apps, shipped through GitHub Actions pipelines.">API e-commerce Laravel avec apps Flutter client et admin, livrées via des pipelines GitHub Actions.</p>
+                        <div class="tags"><span>Laravel</span><span>Flutter</span><span>CI/CD</span></div>
+                    </article>
+
+                    <article class="project panel reveal">
+                        <div class="project-top"><span class="project-cat" data-en="Public sector">Secteur public</span><i class="fa-solid fa-check-to-slot"></i></div>
+                        <h3 data-en="CENI — Voting data">CENI — Données de vote</h3>
+                        <p data-en="REST API centralising and securely aggregating voting data from multiple sources, designed for reliability and scale.">API REST qui centralise et agrège de façon sécurisée les données de vote de plusieurs sources, pensée pour la fiabilité et la charge.</p>
+                        <div class="tags"><span>Python</span><span>Flask</span><span>REST</span></div>
+                    </article>
+                </div>
+
+                <div class="also reveal">
+                    <p class="also-label" data-en="Also shipped">Aussi livrés</p>
+                    <ul class="chips">
+                        <li><a href="https://pressingelegance.com" target="_blank" rel="noopener noreferrer">pressingelegance.com <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                        <li><a href="https://devistravauximmo.com" target="_blank" rel="noopener noreferrer">devistravauximmo.com <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                        <li>UNICHECK</li>
+                        <li>MicroFinancePro</li>
+                        <li>CentralResource</li>
+                        <li>PQV Market</li>
+                        <li>Yoogo</li>
+                        <li>PretConnect</li>
+                        <li>Pulse-AI</li>
+                        <li>Potentia Technologies</li>
+                        <li>work4connect</li>
+                        <li>staffinglatincompany</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bandeau défilant -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-row">
+                <div class="marquee-track">
+                    <span>Laravel</span><i>✦</i><span>Flutter</span><i>✦</i><span>Next.js</span><i>✦</i><span>.NET</span><i>✦</i><span>Python</span><i>✦</i><span>FastAPI</span><i>✦</i><span>Vue.js</span><i>✦</i><span>Azure</span><i>✦</i>
+                    <span>Laravel</span><i>✦</i><span>Flutter</span><i>✦</i><span>Next.js</span><i>✦</i><span>.NET</span><i>✦</i><span>Python</span><i>✦</i><span>FastAPI</span><i>✦</i><span>Vue.js</span><i>✦</i><span>Azure</span><i>✦</i>
+                </div>
+            </div>
+            <div class="marquee-row reverse">
+                <div class="marquee-track">
+                    <span>OCR</span><i>✦</i><span>Machine Learning</span><i>✦</i><span>Mobile Money</span><i>✦</i><span>Docker</span><i>✦</i><span>CI/CD</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>React</span><i>✦</i>
+                    <span>OCR</span><i>✦</i><span>Machine Learning</span><i>✦</i><span>Mobile Money</span><i>✦</i><span>Docker</span><i>✦</i><span>CI/CD</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>React</span><i>✦</i>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Section Contact -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-badge" data-fr="Contact" data-en="Contact">Contact</div>
-                <h2 class="section-title" data-fr="Parlons de votre Projet" data-en="Let's Talk About Your Project">Parlons de votre Projet</h2>
-                <p class="section-description" data-fr="Prêt à concrétiser votre idée ? Discutons de votre projet et créons ensemble quelque chose d'extraordinaire" data-en="Ready to bring your idea to life? Let's discuss your project and create something extraordinary together">
-                    Prêt à concrétiser votre idée ? Discutons de votre projet et créons ensemble quelque chose d'extraordinaire
-                </p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <div class="contact-header">
-                            <h3>Informations de Contact</h3>
-                            <p>N'hésitez pas à me contacter pour discuter de votre projet</p>
-                        </div>
-                        <div class="contact-items">
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div class="contact-details">
-                                    <h4>Email</h4>
-                                    <p><a href="mailto:eyramativon1@gmail.com">eyramativon1@gmail.com</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fab fa-github"></i>
-                                </div>
-                                <div class="contact-details">
-                                    <h4>GitHub</h4>
-                                    <p><a href="https://github.com/kevram73" target="_blank">kevram73</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fab fa-linkedin"></i>
-                                </div>
-                                <div class="contact-details">
-                                    <h4>LinkedIn</h4>
-                                    <p><a href="https://linkedin.com/in/kevin-ativon-yawo-724622294" target="_blank">Kevin Ativon Yawo</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="contact-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="contact-details">
-                                    <h4>Localisation</h4>
-                                    <p>France</p>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Stack -->
+        <section class="section" id="skills" data-shape="4" data-x="0">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="kicker"><span>04</span><span data-en="Stack">Stack</span></p>
+                    <h2 class="section-title" data-en="The tools I <em>master</em>.">Les outils que je <em>maîtrise</em>.</h2>
+                </div>
+
+                <div class="skills">
+                    <div class="skill panel reveal">
+                        <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
+                        <h3 data-en="Languages">Langages</h3>
+                        <ul class="chips small"><li>JavaScript</li><li>TypeScript</li><li>Python</li><li>PHP</li><li>Dart</li><li>C#</li><li>Java</li><li>SQL</li></ul>
+                    </div>
+                    <div class="skill panel reveal">
+                        <div class="skill-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <h3 data-en="Frameworks">Frameworks</h3>
+                        <ul class="chips small"><li>Laravel</li><li>React</li><li>Next.js</li><li>Vue.js</li><li>Node.js</li><li>Express</li><li>Flask</li><li>FastAPI</li><li>Django</li><li>ASP.NET</li></ul>
+                    </div>
+                    <div class="skill panel reveal">
+                        <div class="skill-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <h3>Mobile</h3>
+                        <ul class="chips small"><li>Flutter</li><li>Android / iOS</li><li>GetX</li><li>Firebase</li><li>.NET MAUI</li></ul>
+                    </div>
+                    <div class="skill panel reveal">
+                        <div class="skill-icon"><i class="fa-solid fa-brain"></i></div>
+                        <h3 data-en="Data &amp; AI">Données &amp; IA</h3>
+                        <ul class="chips small"><li>PostgreSQL</li><li>MySQL</li><li>SQL Server</li><li>MongoDB</li><li>PaddleOCR</li><li>Ollama</li><li>Machine Learning</li></ul>
+                    </div>
+                    <div class="skill panel reveal">
+                        <div class="skill-icon"><i class="fa-solid fa-infinity"></i></div>
+                        <h3>DevOps</h3>
+                        <ul class="chips small"><li>Git</li><li>GitHub Actions</li><li>Azure DevOps</li><li>Docker</li><li>Linux</li><li>Vercel</li><li>cPanel</li><li>Scrum</li></ul>
+                    </div>
+                    <div class="skill panel reveal">
+                        <div class="skill-icon"><i class="fa-solid fa-plug"></i></div>
+                        <h3 data-en="Also">Aussi</h3>
+                        <ul class="chips small"><li>Mobile Money</li><li data-en="Payment gateways">Passerelles de paiement</li><li>WordPress</li><li>VitePress</li><li>Tauri</li></ul>
                     </div>
                 </div>
-                <div class="contact-form-container">
-                    <form class="contact-form" id="contact-form">
-                        <div class="form-header">
-                            <h3 style="color: black;" data-fr="Envoyez-moi un message" data-en="Send me a message">Envoyez-moi un message</h3>
-                            <p style="color: black;" data-fr="Je vous répondrai dans les plus brefs délais" data-en="I will respond to you as soon as possible">Je vous répondrai dans les plus brefs délais</p>
+
+                <div class="edu">
+                    <article class="edu-card panel reveal">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <div>
+                            <p class="edu-date">2022 — 2024</p>
+                            <h3 data-en="Master's in Computer Science &amp; Systems">Master Informatique et Systèmes</h3>
+                            <p data-en="UTBM — Université de Technologie de Belfort-Montbéliard, France / École Polytechnique de Lomé">UTBM — Université de Technologie de Belfort-Montbéliard, France / École Polytechnique de Lomé</p>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name" style="color: black;" data-fr="Nom complet" data-en="Full Name">Nom complet</label>
-                                <input type="text" id="name" name="name" placeholder="Votre nom complet" data-fr-placeholder="Votre nom complet" data-en-placeholder="Your full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" style="color: black;" data-fr="Email" data-en="Email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="votre@email.com" data-fr-placeholder="votre@email.com" data-en-placeholder="your@email.com" required>
-                            </div>
+                    </article>
+                    <article class="edu-card panel reveal">
+                        <i class="fa-solid fa-book-open"></i>
+                        <div>
+                            <p class="edu-date">2018 — 2022</p>
+                            <h3 data-en="Bachelor's in Software Engineering">Licence en Génie Logiciel</h3>
+                            <p data-en="University of Lomé, Togo">Université de Lomé, Togo</p>
                         </div>
-                        <div class="form-group">
-                            <label for="subject" style="color: black;" data-fr="Sujet" data-en="Subject">Sujet</label>
-                            <input type="text" id="subject" name="subject" placeholder="Sujet de votre message" data-fr-placeholder="Sujet de votre message" data-en-placeholder="Subject of your message" required>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section contact" id="contact" data-shape="5" data-x="0">
+            <div class="container">
+                <div class="contact-head reveal">
+                    <p class="kicker"><span>05</span><span data-en="Contact">Contact</span></p>
+                    <h2 class="contact-title" data-en="Let's build<br><span class=&quot;grad&quot;>something.</span>">Construisons<br><span class="grad">quelque chose.</span></h2>
+                    <p class="contact-lead" data-en="A product, a mission, a lead-dev role? I usually reply within 24 hours.">Un produit, une mission, un poste de lead dev ? Je réponds en général sous 24 h.</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-links reveal">
+                        <div class="mail-row">
+                            <a href="mailto:eyramativon1@gmail.com" class="mail-link">eyramativon1@gmail.com</a>
+                            <button type="button" class="copy-btn" id="copy-btn" aria-label="Copier l'adresse e-mail"><i class="fa-regular fa-copy"></i><span data-en="Copy">Copier</span></button>
                         </div>
-                        <div class="form-group">
-                            <label for="message" style="color: black;" data-fr="Message" data-en="Message">Message</label>
-                            <textarea id="message" name="message" placeholder="Décrivez votre projet en détail..." data-fr-placeholder="Décrivez votre projet en détail..." data-en-placeholder="Describe your project in detail..." rows="6" required></textarea>
+                        <ul class="socials">
+                            <li><a href="https://github.com/Kevram73" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i><span>github.com/Kevram73</span><i class="fa-solid fa-arrow-right arrow"></i></a></li>
+                            <li><a href="https://www.linkedin.com/in/kevin-eyram-ativon-5686a1217" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i><span>Kevin Eyram ATIVON</span><i class="fa-solid fa-arrow-right arrow"></i></a></li>
+                            <li><a href="https://kevram.tech" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i><span>kevram.tech</span><i class="fa-solid fa-arrow-right arrow"></i></a></li>
+                            <li><span class="static"><i class="fa-solid fa-location-dot"></i><span>Accra, Ghana · Lomé, Togo</span></span></li>
+                        </ul>
+                    </div>
+
+                    <form class="contact-form panel reveal" id="contact-form" novalidate>
+                        <div class="field-row">
+                            <label class="field">
+                                <span data-en="Name">Nom</span>
+                                <input type="text" name="name" required autocomplete="name" placeholder="Jean Dupont" data-en-placeholder="Jane Doe">
+                            </label>
+                            <label class="field">
+                                <span>Email</span>
+                                <input type="email" name="email" required autocomplete="email" placeholder="vous@exemple.com" data-en-placeholder="you@example.com">
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span class="btn-text" data-fr="Envoyer le message" data-en="Send Message">Envoyer le message</span>
-                            <span class="btn-icon">
-                                <i class="fas fa-paper-plane"></i>
-                            </span>
-                        </button>
+                        <label class="field">
+                            <span data-en="Subject">Sujet</span>
+                            <input type="text" name="subject" placeholder="Application mobile, API, mission…" data-en-placeholder="Mobile app, API, contract…">
+                        </label>
+                        <label class="field">
+                            <span>Message</span>
+                            <textarea name="message" rows="5" required placeholder="Parlez-moi de votre projet" data-en-placeholder="Tell me about your project"></textarea>
+                        </label>
+                        <label class="hp" aria-hidden="true">Ne pas remplir <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+                        <button type="submit" class="btn btn-primary btn-block" id="form-submit"><span data-en="Send message">Envoyer le message</span><i class="fa-solid fa-paper-plane"></i></button>
+                        <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
                     </form>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Kevram Tech</h3>
-                    <p>Votre partenaire de confiance pour le développement digital.</p>
-                    <div class="social-links">
-                        <a href="https://github.com/kevram73" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-                        <a href="mailto:eyramativon1@gmail.com"><i class="fas fa-envelope"></i></a>
-                        <a href="https://linkedin.com/in/kevin-ativon-yawo-724622294" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#services">Développement Mobile</a></li>
-                        <li><a href="#services">Développement Web</a></li>
-                        <li><a href="#services">Backend & API</a></li>
-                        <li><a href="#services">UI/UX Design</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><a href="mailto:eyramativon1@gmail.com">eyramativon1@gmail.com</a></li>
-                        <li><a href="https://github.com/kevram73" target="_blank">GitHub: kevram73</a></li>
-                        <li><a href="https://linkedin.com/in/kevin-ativon-yawo-724622294" target="_blank">LinkedIn</a></li>
-                        <li><a href="#" id="mentions-legales">Mentions légales</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="footer-bottom-content">
-                    <p>&copy; 2024 Kevram Tech. Tous droits réservés.</p>
-                    <p>Développé avec ❤️ par <strong>Ativon Yawo Kevin Eyram</strong></p>
-                </div>
-            </div>
+        <div class="container footer-inner">
+            <p>© <span id="year">2026</span> Kevin Eyram ATIVON · Kevram-Tech</p>
+            <p class="footer-made" data-en="Built with Three.js &amp; plenty of coffee.">Conçu avec Three.js et beaucoup de café.</p>
         </div>
     </footer>
 
-
-
-    <!-- Système de notifications -->
-    <div class="notification-container" id="notification-container"></div>
-
-
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="scene.js"></script>
 </body>
 </html>

@@ -1,444 +1,322 @@
-// Header professionnel avec effet de transparence
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.header');
-    if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.12)';
-    } else {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+// Interface : langue, navigation, animations au défilement, formulaire.
+// La scène Three.js vit dans scene.js et lit window.sceneTarget.
+(() => {
+    const root = document.documentElement;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---------- Langue ----------
+    const translatable = document.querySelectorAll('[data-en]');
+    translatable.forEach(el => { el.dataset.fr = el.innerHTML; });
+    const placeholders = document.querySelectorAll('[data-en-placeholder]');
+    placeholders.forEach(el => { el.dataset.frPlaceholder = el.placeholder; });
+    const langBtn = document.getElementById('lang-btn');
+
+    let lang = 'fr';
+    try {
+        lang = localStorage.getItem('lang') || (navigator.language || 'fr').slice(0, 2);
+    } catch (e) { /* stockage indisponible */ }
+    if (lang !== 'en') lang = 'fr';
+
+    const rotatorWords = {
+        fr: ['Full-stack web & mobile', 'Laravel & Flutter', 'Pipelines IA & OCR', '.NET & Azure', 'Paiements & Mobile Money'],
+        en: ['Full-stack web & mobile', 'Laravel & Flutter', 'AI & OCR pipelines', '.NET & Azure', 'Payments & Mobile Money']
+    };
+
+    function setLang(next) {
+        lang = next;
+        root.lang = next;
+        translatable.forEach(el => { el.innerHTML = next === 'en' ? el.dataset.en : el.dataset.fr; });
+        placeholders.forEach(el => { el.placeholder = next === 'en' ? el.dataset.enPlaceholder : el.dataset.frPlaceholder; });
+        langBtn.dataset.active = next;
+        try { localStorage.setItem('lang', next); } catch (e) { /* ignoré */ }
     }
-});
+    setLang(lang);
+    langBtn.addEventListener('click', () => setLang(lang === 'fr' ? 'en' : 'fr'));
 
-// Pas d'animations de scroll - scroll normal uniquement
+    // ---------- Navigation ----------
+    const nav = document.getElementById('nav');
+    const menuBtn = document.getElementById('menu-btn');
+    const navLinks = document.getElementById('nav-links');
+    const progress = document.getElementById('progress');
 
-// Gestion du formulaire de contact
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        
-        // Animation de chargement
-        submitBtn.innerHTML = '<span class="loading"></span> Envoi en cours...';
-        submitBtn.disabled = true;
-        
-        // Simulation d'envoi (remplacer par votre logique d'envoi)
+    function toggleMenu(open) {
+        navLinks.classList.toggle('open', open);
+        nav.classList.toggle('menu-open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+    }
+    menuBtn.addEventListener('click', () => toggleMenu(!navLinks.classList.contains('open')));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+
+    function onScroll() {
+        const y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 20);
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ---------- Texte brouillé ----------
+    const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*<>/';
+    function scramble(el, duration = 900) {
+        if (reduceMotion) return;
+        const startLang = lang;
+        const final = el.textContent;
+        const start = performance.now();
+        (function frame(now) {
+            if (lang !== startLang) return; // la langue a changé entre-temps
+            const t = Math.min(1, (now - start) / duration);
+            const settled = Math.floor(t * final.length);
+            let out = '';
+            for (let i = 0; i < final.length; i++) {
+                out += i < settled || final[i] === ' ' ? final[i] : glyphs[(Math.random() * glyphs.length) | 0];
+            }
+            el.textContent = out;
+            if (t < 1) requestAnimationFrame(frame);
+            else el.textContent = final;
+        })(start);
+    }
+
+    // ---------- Chargement ----------
+    const loaderCount = document.getElementById('loader-count');
+    const loaderBar = document.getElementById('loader-bar');
+    const loadStart = performance.now();
+    const minDuration = reduceMotion ? 0 : 1300;
+    let sceneReady = !!window.sceneReady;
+    window.addEventListener('scene:ready', () => { sceneReady = true; });
+    setTimeout(() => { sceneReady = true; }, 4000); // si la 3D ne charge pas
+
+    (function loading(now) {
+        const t = Math.min(1, (now - loadStart) / Math.max(minDuration, 1));
+        // Plafonne à 90 % tant que la scène n'est pas prête
+        const shown = Math.round((sceneReady ? t : Math.min(t, 0.9)) * 100);
+        loaderCount.textContent = shown;
+        loaderBar.style.transform = `scaleX(${shown / 100})`;
+        if (shown < 100) return requestAnimationFrame(loading);
+        setTimeout(() => {
+            root.classList.add('loaded');
+            setTimeout(() => document.querySelectorAll('[data-scramble]').forEach((el, i) => setTimeout(() => scramble(el, 1100), i * 160)), 250);
+        }, 150);
+    })(loadStart);
+
+    // ---------- Section courante (pilote la forme 3D et le HUD) ----------
+    const sections = document.querySelectorAll('main section[data-shape]');
+    const linkFor = id => navLinks.querySelector(`a[href="#${id}"]`);
+    const hudIndex = document.getElementById('hud-index');
+    const hudLabel = document.getElementById('hud-label');
+    const shapeLabels = {
+        fr: ['Sphère', 'Galaxie', 'Double hélice', 'Nœud torique', 'Onde', 'Anneau'],
+        en: ['Sphere', 'Galaxy', 'Double helix', 'Torus knot', 'Wave', 'Ring']
+    };
+    let currentShape = 0;
+    window.sceneTarget = { shape: 0, x: 1.9 };
+
+    function updateHud() {
+        hudIndex.textContent = String(currentShape + 1).padStart(2, '0') + ' / 06';
+        hudLabel.textContent = shapeLabels[lang][currentShape];
+    }
+    langBtn.addEventListener('click', updateHud);
+    updateHud();
+
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const s = entry.target;
+            currentShape = Number(s.dataset.shape);
+            window.sceneTarget = { shape: currentShape, x: Number(s.dataset.x || 0) };
+            updateHud();
+            scramble(hudLabel, 500);
+            navLinks.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+            const link = linkFor(s.id);
+            if (link) link.classList.add('active');
+        });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    sections.forEach(s => sectionObserver.observe(s));
+
+    // ---------- Apparition au défilement ----------
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+            const kicker = entry.target.querySelector('.kicker span:last-child');
+            if (kicker) scramble(kicker, 700);
+        });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+        // Léger décalage entre éléments d'une même grille
+        const siblings = el.parentElement.querySelectorAll(':scope > .reveal');
+        if (siblings.length > 1) el.style.transitionDelay = `${Array.from(siblings).indexOf(el) % 3 * 90}ms`;
+        revealObserver.observe(el);
+    });
+
+    // ---------- Compteurs ----------
+    const counterObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            counterObserver.unobserve(el);
+            const end = Number(el.dataset.count);
+            if (reduceMotion) return;
+            const start = performance.now();
+            const duration = 1400;
+            (function step(now) {
+                const t = Math.min(1, (now - start) / duration);
+                el.textContent = Math.round(end * (1 - Math.pow(1 - t, 3)));
+                if (t < 1) requestAnimationFrame(step);
+            })(start);
+        });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    // ---------- Mots qui défilent ----------
+    const rotator = document.getElementById('rotator');
+    let wordIndex = 0;
+    if (!reduceMotion) {
+        setInterval(() => {
+            rotator.classList.add('out');
+            setTimeout(() => {
+                const words = rotatorWords[lang];
+                wordIndex = (wordIndex + 1) % words.length;
+                rotator.textContent = words[wordIndex];
+                rotator.classList.remove('out');
+            }, 350);
+        }, 2800);
+    }
+
+    // ---------- Curseur, boutons magnétiques et coordonnées du HUD ----------
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (finePointer && !reduceMotion) {
+        const cursor = document.getElementById('cursor');
+        const hudCoords = document.getElementById('hud-coords');
+        let cx = -100, cy = -100, tx = -100, ty = -100;
+        window.addEventListener('pointermove', e => {
+            tx = e.clientX; ty = e.clientY;
+            cursor.classList.add('visible');
+            const nx = (e.clientX / window.innerWidth) * 2 - 1;
+            const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+            hudCoords.textContent = `x ${nx.toFixed(2)} · y ${ny.toFixed(2)}`;
+        }, { passive: true });
+        document.addEventListener('pointerleave', () => cursor.classList.remove('visible'));
+        window.addEventListener('pointerdown', () => cursor.classList.add('down'));
+        window.addEventListener('pointerup', () => cursor.classList.remove('down'));
+        document.addEventListener('pointerover', e => {
+            cursor.classList.toggle('hover', !!e.target.closest('a, button, .project, input, textarea'));
+        });
+        (function follow() {
+            cx += (tx - cx) * 0.2;
+            cy += (ty - cy) * 0.2;
+            cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+            requestAnimationFrame(follow);
+        })();
+
+        document.querySelectorAll('.btn, .nav-cta, .copy-btn, .lang-btn').forEach(el => {
+            el.addEventListener('pointermove', e => {
+                const r = el.getBoundingClientRect();
+                const dx = e.clientX - (r.left + r.width / 2);
+                const dy = e.clientY - (r.top + r.height / 2);
+                el.style.transform = `translate(${dx * 0.25}px, ${dy * 0.35}px)`;
+            });
+            el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+        });
+    }
+
+    // ---------- Cartes projets inclinables ----------
+    if (finePointer && !reduceMotion) {
+        document.querySelectorAll('.project').forEach(card => {
+            card.addEventListener('pointermove', e => {
+                const r = card.getBoundingClientRect();
+                const px = (e.clientX - r.left) / r.width;
+                const py = (e.clientY - r.top) / r.height;
+                card.style.setProperty('--ry', `${(px - 0.5) * 10}deg`);
+                card.style.setProperty('--rx', `${(0.5 - py) * 10}deg`);
+                card.style.setProperty('--mx', `${px * 100}%`);
+                card.style.setProperty('--my', `${py * 100}%`);
+            });
+            card.addEventListener('pointerleave', () => {
+                card.style.setProperty('--rx', '0deg');
+                card.style.setProperty('--ry', '0deg');
+            });
+        });
+    }
+
+    // ---------- Copier l'e-mail ----------
+    const email = 'eyramativon1@gmail.com';
+    const copyBtn = document.getElementById('copy-btn');
+    copyBtn.addEventListener('click', async () => {
         try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            // Message de succès
-            showNotification('Message envoyé avec succès !', 'success');
-            contactForm.reset();
-            
-        } catch (error) {
-            showNotification('Erreur lors de l\'envoi du message', 'error');
+            await navigator.clipboard.writeText(email);
+        } catch (e) {
+            window.location.href = `mailto:${email}`;
+            return;
+        }
+        const label = copyBtn.querySelector('span');
+        copyBtn.classList.add('copied');
+        label.textContent = lang === 'en' ? 'Copied!' : 'Copié !';
+        setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            label.textContent = lang === 'en' ? 'Copy' : 'Copier';
+        }, 1800);
+    });
+
+    // ---------- Formulaire (envoi via FormSubmit vers la boîte Gmail) ----------
+    const form = document.getElementById('contact-form');
+    const formNote = document.getElementById('form-note');
+    const submitBtn = document.getElementById('form-submit');
+    const formMessages = {
+        fr: { sending: 'Envoi en cours…', ok: 'Message envoyé ! Je vous réponds très vite.', error: "L'envoi a échoué. Écrivez-moi directement à " + email + '.' },
+        en: { sending: 'Sending…', ok: "Message sent! I'll get back to you shortly.", error: 'Sending failed. Please email me directly at ' + email + '.' }
+    };
+    function setNote(state) {
+        formNote.className = 'form-note' + (state === 'sending' ? '' : ' ' + state);
+        formNote.textContent = formMessages[lang][state];
+    }
+
+    form.addEventListener('submit', async e => {
+        e.preventDefault();
+        let valid = true;
+        form.querySelectorAll('[required]').forEach(input => {
+            const ok = input.value.trim() !== '' && input.checkValidity();
+            input.closest('.field').classList.toggle('invalid', !ok);
+            if (!ok) valid = false;
+        });
+        if (!valid) return;
+
+        const data = new FormData(form);
+        if (data.get('_honey')) return; // robot
+        const subject = data.get('subject').trim() || (lang === 'en' ? 'Project enquiry' : 'Demande de projet');
+
+        submitBtn.disabled = true;
+        setNote('sending');
+        try {
+            const res = await fetch(`https://formsubmit.co/ajax/${email}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    name: data.get('name').trim(),
+                    email: data.get('email').trim(),
+                    message: data.get('message').trim(),
+                    _subject: `[kevram.tech] ${subject}`,
+                    _replyto: data.get('email').trim(),
+                    _template: 'table',
+                    _captcha: 'false'
+                })
+            });
+            const json = await res.json().catch(() => ({}));
+            if (!res.ok || String(json.success) !== 'true') throw new Error(json.message || res.status);
+            setNote('ok');
+            form.reset();
+        } catch (err) {
+            setNote('error');
         } finally {
-            submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         }
     });
-}
-
-// Système de notifications
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `;
-    
-    // Styles pour la notification
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        max-width: 400px;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Animation d'entrée
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Fermeture automatique
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 5000);
-    
-    // Fermeture manuelle
-    notification.querySelector('.notification-close').addEventListener('click', () => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (document.body.contains(notification)) {
-                document.body.removeChild(notification);
-            }
-        }, 300);
+    form.addEventListener('input', e => {
+        const field = e.target.closest('.field');
+        if (field) field.classList.remove('invalid');
     });
-}
 
-// Navigation simple pour les liens d'ancrage
-function initSimpleNavigation() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const target = document.querySelector(targetId);
-            
-            if (target) {
-                const offsetTop = target.offsetTop - 100; // Compenser la hauteur du header
-                
-                // Scroll vers la section
-                window.scrollTo(0, offsetTop);
-                
-                // Mettre à jour l'URL sans recharger la page
-                history.pushState(null, null, targetId);
-            }
-        });
-    });
-}
-
-// Pas d'animations de cartes flottantes - affichage normal
-
-// Pas d'effets de parallaxe - scroll normal uniquement
-
-// Pas d'animations de compteurs - affichage normal
-
-// Gestion des langues
-function initLanguageToggle() {
-    const languageToggle = document.getElementById('language-toggle');
-    const currentLangSpan = document.querySelector('.current-lang');
-    
-    if (!languageToggle || !currentLangSpan) return;
-    
-    // Récupérer la langue sauvegardée ou utiliser le français par défaut
-    let currentLanguage = localStorage.getItem('language') || 'fr';
-    
-    // Fonction pour changer la langue
-    function changeLanguage(lang) {
-        currentLanguage = lang;
-        localStorage.setItem('language', lang);
-        
-        // Mettre à jour l'affichage du bouton
-        currentLangSpan.textContent = lang.toUpperCase();
-        
-        // Traduire tous les éléments avec des attributs de traduction
-        const elementsToTranslate = document.querySelectorAll('[data-fr][data-en]');
-        elementsToTranslate.forEach(element => {
-            const translation = element.getAttribute(`data-${lang}`);
-            if (translation) {
-                element.textContent = translation;
-            }
-        });
-        
-        // Traduire les placeholders des inputs
-        const inputsWithPlaceholders = document.querySelectorAll('input[data-fr-placeholder], textarea[data-fr-placeholder]');
-        inputsWithPlaceholders.forEach(input => {
-            const placeholder = input.getAttribute(`data-${lang}-placeholder`);
-            if (placeholder) {
-                input.placeholder = placeholder;
-            }
-        });
-        
-        // Mettre à jour l'attribut lang du document
-        document.documentElement.lang = lang;
-    }
-    
-    // Événement de clic sur le bouton de langue
-    languageToggle.addEventListener('click', () => {
-        const newLang = currentLanguage === 'fr' ? 'en' : 'fr';
-        changeLanguage(newLang);
-    });
-    
-    // Initialiser avec la langue sauvegardée
-    changeLanguage(currentLanguage);
-}
-
-// Gestion du thème sombre/clair
-function toggleTheme() {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    
-    // Mettre à jour l'icône du bouton
-    const themeIcon = document.querySelector('#theme-toggle i');
-    if (themeIcon) {
-        themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-    }
-}
-
-// Charger le thème sauvegardé
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    const themeIcon = document.querySelector('#theme-toggle i');
-    
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        if (themeIcon) themeIcon.className = 'fas fa-sun';
-    } else {
-        if (themeIcon) themeIcon.className = 'fas fa-moon';
-    }
-    
-    // Ajouter l'événement au bouton de thème
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
-    }
-});
-
-// Optimisation des performances - lazy loading des images
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-    });
-}
-
-// Gestion des erreurs JavaScript
-window.addEventListener('error', (e) => {
-    console.error('Erreur JavaScript:', e.error);
-    // Ici vous pourriez envoyer l'erreur à un service de monitoring
-});
-
-// Service Worker pour le cache (PWA ready)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
-
-// Fonction utilitaire pour le debounce
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Pas d'optimisation de scroll - scroll normal uniquement
-
-// Gestion du focus pour l'accessibilité
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-navigation');
-    }
-});
-
-document.addEventListener('mousedown', () => {
-    document.body.classList.remove('keyboard-navigation');
-});
-
-// Micro-interactions avancées
-document.addEventListener('DOMContentLoaded', () => {
-    // Pas d'animations d'icônes - interface simple
-    
-    // Pas d'effet de ripple - interface simple
-    
-    // Pas d'effet de tilt - interface simple
-    
-    // Pas d'effet de typing - affichage normal du titre
-});
-
-// Préchargement des ressources critiques
-function preloadCriticalResources() {
-    const criticalResources = [
-        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
-    ];
-    
-    criticalResources.forEach(resource => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'style';
-        link.href = resource;
-        document.head.appendChild(link);
-    });
-}
-
-// Curseur personnalisé
-function initCustomCursor() {
-    const cursor = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
-    const customCursor = document.querySelector('.custom-cursor');
-    
-    if (!cursor || !cursorOutline) return;
-    
-    let mouseX = 0, mouseY = 0;
-    let outlineX = 0, outlineY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-    });
-    
-    // Animation fluide pour l'outline
-    function animateOutline() {
-        outlineX += (mouseX - outlineX) * 0.1;
-        outlineY += (mouseY - outlineY) * 0.1;
-        
-        cursorOutline.style.left = outlineX + 'px';
-        cursorOutline.style.top = outlineY + 'px';
-        
-        requestAnimationFrame(animateOutline);
-    }
-    animateOutline();
-    
-    // Effets de hover
-    const hoverElements = document.querySelectorAll('a, button, .service-card, .tech-category');
-    hoverElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            customCursor.classList.add('hover');
-        });
-        el.addEventListener('mouseleave', () => {
-            customCursor.classList.remove('hover');
-        });
-    });
-}
-
-// Pas d'écran de chargement - affichage direct
-
-// Pas d'effets de particules - interface simple
-
-// Pas d'effets de morphing - interface simple
-
-// Pas d'animations de texte - affichage normal
-
-// Pas d'effets 3D - interface simple
-
-// Pas d'effets de liquide - interface simple
-
-// Fonction supprimée - plus de navigation avancée
-
-// Système de notifications avancé
-function initNotificationSystem() {
-    const container = document.getElementById('notification-container');
-    
-    function showNotification(title, message, type = 'info', duration = 5000) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        
-        const icon = getNotificationIcon(type);
-        
-        notification.innerHTML = `
-            <div class="notification-header">
-                <div class="notification-title">
-                    <i class="${icon}"></i>
-                    ${title}
-                </div>
-                <button class="notification-close">&times;</button>
-            </div>
-            <div class="notification-message">${message}</div>
-        `;
-        
-        container.appendChild(notification);
-        
-        // Animation d'entrée
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-        
-        // Fermeture automatique
-        const autoClose = setTimeout(() => {
-            closeNotification(notification);
-        }, duration);
-        
-        // Fermeture manuelle
-        notification.querySelector('.notification-close').addEventListener('click', () => {
-            clearTimeout(autoClose);
-            closeNotification(notification);
-        });
-    }
-    
-    function closeNotification(notification) {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            if (container.contains(notification)) {
-                container.removeChild(notification);
-            }
-        }, 300);
-    }
-    
-    function getNotificationIcon(type) {
-        const icons = {
-            success: 'fas fa-check-circle',
-            error: 'fas fa-exclamation-circle',
-            warning: 'fas fa-exclamation-triangle',
-            info: 'fas fa-info-circle'
-        };
-        return icons[type] || icons.info;
-    }
-    
-    // Exposer la fonction globalement
-    window.showNotification = showNotification;
-}
-
-// Pas de bouton de retour en haut - scroll normal uniquement
-
-// Pas de système de son - interface silencieuse
-
-// Pas d'effets de parallaxe multi-couches - scroll normal
-
-// Pas d'effets de néon - interface simple
-
-// Initialisation finale - fonctionnalités essentielles uniquement
-document.addEventListener('DOMContentLoaded', () => {
-    preloadCriticalResources();
-    
-    // Initialiser seulement les fonctionnalités essentielles
-    initLanguageToggle();
-    initSimpleNavigation();
-    initNotificationSystem();
-    
-    // Ajouter une classe pour indiquer que le JavaScript est chargé
-    document.body.classList.add('js-loaded');
-    
-    // Performance monitoring
-    if ('performance' in window) {
-        window.addEventListener('load', () => {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
-        });
-    }
-});
+    document.getElementById('year').textContent = new Date().getFullYear();
+})();
