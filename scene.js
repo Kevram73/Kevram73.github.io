@@ -26,7 +26,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, LITE ? 1.75 : 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight, false);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#06060b');
+scene.background = new THREE.Color('#07060f');
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.set(0, 0, 7.5);
 
@@ -109,14 +109,9 @@ const targets = builders.map(build => {
 });
 
 // Palette par forme : [A, B, C]
-const palettes = [
-    ['#5eead4', '#8b5cf6', '#f472b6'],
-    ['#fbbf24', '#f472b6', '#8b5cf6'],
-    ['#5eead4', '#38bdf8', '#8b5cf6'],
-    ['#8b5cf6', '#f472b6', '#fb923c'],
-    ['#38bdf8', '#5eead4', '#a3e635'],
-    ['#5eead4', '#8b5cf6', '#f472b6']
-].map(p => p.map(c => new THREE.Color(c)));
+// (définies dans script.js pour que l'interface suive les mêmes couleurs)
+const palettes = (window.sectionPalettes || Array(6).fill(['#22d3ee', '#a78bfa', '#f472b6']))
+    .map(p => p.map(c => new THREE.Color(c)));
 
 // ---------- Particules ----------
 const positions = new Float32Array(COUNT * 3);
@@ -207,9 +202,14 @@ const vertexShader = /* glsl */`
         gl_Position = projectionMatrix * mv;
         gl_PointSize = uSize * aScale * uPixelRatio * (1.0 + ring * 0.8) / -mv.z;
 
-        float g = smoothstep(-3.0, 3.0, p.x * 0.6 + p.y);
-        vColor = mix(uColorA, uColorB, g);
-        vColor = mix(vColor, uColorC, smoothstep(0.7, 1.0, g) * 0.7);
+        // Dégradé à trois teintes, légèrement décalé par particule pour éviter les aplats
+        float g = smoothstep(-3.2, 3.2, p.x * 0.55 + p.y + (aSeed - 0.5) * 1.6);
+        vec3 col = mix(uColorA, uColorB, smoothstep(0.0, 0.6, g));
+        col = mix(col, uColorC, smoothstep(0.55, 1.0, g));
+        // Éclats : quelques particules prennent la 3e teinte ou deviennent presque blanches
+        col = mix(col, uColorC, step(0.88, aSeed) * 0.75);
+        col = mix(col, vec3(1.0, 0.97, 0.94), step(0.975, aSeed) * 0.7);
+        vColor = col;
         vTwinkle = 0.65 + 0.35 * sin(t * (1.5 + aSeed * 2.5) + aSeed * 40.0);
     }
 `;
@@ -433,7 +433,8 @@ let lastScroll = window.scrollY;
 let scrollEnergy = 0;
 let readySent = false;
 const damp = (current, target, rate, dt) => current + (target - current) * (1 - Math.exp(-rate * dt));
-const coreScale = [0.9, 0, 0, 0, 0, 0.7];
+const coreScale = [0.9, 0, 0, 0, 0, 0];
+const white = new THREE.Color('#ffffff');
 
 function tick() {
     const dt = Math.min(clock.getDelta(), 0.05);
@@ -464,9 +465,10 @@ function tick() {
     uniforms.uColorB.value.lerp(pal[1], kc);
     uniforms.uColorC.value.lerp(pal[2], kc);
     coreWire.material.color.copy(uniforms.uColorB.value);
+    stars.material.color.copy(uniforms.uColorB.value).lerp(white, 0.55);
 
     uniforms.uWave.value = damp(uniforms.uWave.value, shape === 4 ? 1 : 0, 2, dt);
-    uniforms.uAlpha.value = damp(uniforms.uAlpha.value, shape === 0 || shape === 5 ? 1 : 0.6, 2, dt);
+    uniforms.uAlpha.value = damp(uniforms.uAlpha.value, shape === 0 ? 1 : shape === 5 ? 0.8 : 0.6, 2, dt);
 
     // Warp au défilement
     const sy = window.scrollY;

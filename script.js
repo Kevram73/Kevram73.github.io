@@ -112,6 +112,22 @@
     let currentShape = 0;
     window.sceneTarget = { shape: 0, x: 1.9 };
 
+    // Palettes [A, B, C] par section, partagées avec scene.js
+    const palettes = window.sectionPalettes = [
+        ['#22d3ee', '#a78bfa', '#f472b6'], // Aurore
+        ['#fbbf24', '#fb7185', '#c084fc'], // Coucher de soleil
+        ['#2dd4bf', '#60a5fa', '#818cf8'], // Océan
+        ['#e879f9', '#8b5cf6', '#fb923c'], // Nébuleuse
+        ['#a3e635', '#34d399', '#22d3ee'], // Lagon
+        ['#5eead4', '#a78bfa', '#f9a8d4']  // Aurore douce
+    ];
+    function applyPalette(i) {
+        const [a1, a2, a3] = palettes[i];
+        root.style.setProperty('--a1', a1);
+        root.style.setProperty('--a2', a2);
+        root.style.setProperty('--a3', a3);
+    }
+
     function updateHud() {
         hudIndex.textContent = String(currentShape + 1).padStart(2, '0') + ' / 06';
         hudLabel.textContent = shapeLabels[lang][currentShape];
@@ -125,6 +141,7 @@
             const s = entry.target;
             currentShape = Number(s.dataset.shape);
             window.sceneTarget = { shape: currentShape, x: Number(s.dataset.x || 0) };
+            applyPalette(currentShape);
             updateHud();
             scramble(hudLabel, 500);
             navLinks.querySelectorAll('a').forEach(a => a.classList.remove('active'));
