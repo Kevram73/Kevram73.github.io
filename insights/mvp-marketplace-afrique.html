@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lancer un MVP marketplace en Afrique de l’Ouest — Kevram Tech</title>
+    <meta name="description" content="Comment cadrer un MVP marketplace en Afrique de l’Ouest : rôles, jalons, paiements FCFA/Mobile Money et mise en production. Guide Kevram Tech (Lomé).">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://kevram.tech/insights/mvp-marketplace-afrique.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Lancer un MVP marketplace en Afrique de l’Ouest">
+    <meta property="og:description" content="Cadrage, rôles critiques et premier jalon livrable — le regard de Kevram Tech.">
+    <meta property="og:url" content="https://kevram.tech/insights/mvp-marketplace-afrique.html">
+    <meta property="og:image" content="https://kevram.tech/og-image.png">
+    <meta property="og:site_name" content="Kevram Tech">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kevram.tech/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Lancer un MVP marketplace en Afrique de l’Ouest",
+      "description": "Comment cadrer un MVP marketplace en Afrique de l’Ouest : rôles, jalons, paiements et mise en production.",
+      "author": { "@type": "Organization", "name": "Kevram Tech" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Kevram Tech",
+        "logo": { "@type": "ImageObject", "url": "https://kevram.tech/logo.svg" }
+      },
+      "mainEntityOfPage": "https://kevram.tech/insights/mvp-marketplace-afrique.html",
+      "image": "https://kevram.tech/og-image.png",
+      "inLanguage": "fr"
+    }
+    </script>
+    <script>
+        (() => {
+            const stored = localStorage.getItem("kevram-theme");
+            const theme = stored === "light" || stored === "dark"
+                ? stored
+                : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header is-scrolled">
+        <a href="../index.html" class="brand-mark">
+            <img src="../logo.svg" alt="" class="brand-logo" width="32" height="32">
+            <span>Kevram Tech</span>
+        </a>
+        <div class="header-end">
+            <button type="button" id="theme-toggle" class="theme-btn" aria-label="Thème">
+                <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"></path></svg>
+            </button>
+            <button type="button" id="language-toggle" class="lang-btn" aria-label="Langue"><span class="current-lang">FR</span></button>
+            <a href="../index.html#contact" class="btn btn-nav" data-fr="Nous écrire" data-en="Contact us">Nous écrire</a>
+        </div>
+    </header>
+    <main class="article-page">
+        <article class="container article">
+            <p class="article-kicker"><a href="../index.html#insights">Insights</a> · 2026</p>
+            <h1 data-fr="Lancer un MVP marketplace en Afrique de l’Ouest" data-en="Launching a marketplace MVP in West Africa">Lancer un MVP marketplace en Afrique de l’Ouest</h1>
+            <p class="article-lead" data-fr="Un marketplace n’est pas un catalogue. C’est un système de confiance, de stock et de paiement. Voici comment nous cadrons le premier livrable." data-en="A marketplace is not a catalog. It is a system of trust, stock, and payment. Here is how we scope the first shippable release.">
+                Un marketplace n’est pas un catalogue. C’est un système de confiance, de stock et de paiement. Voici comment nous cadrons le premier livrable.
+            </p>
+
+            <h2 data-fr="1. Choisir le cœur du marché" data-en="1. Choose the market core">1. Choisir le cœur du marché</h2>
+            <p data-fr="Plutôt que “tout le monde vend tout”, on isole 2–3 rôles vraiment critiques (ex. producteur, acheteur, transporteur). Moins de rôles au départ, plus de profondeur métier." data-en="Instead of “everyone sells everything”, isolate 2–3 critical roles (e.g. producer, buyer, transporter). Fewer roles early means deeper domain fit.">
+                Plutôt que “tout le monde vend tout”, on isole 2–3 rôles vraiment critiques (ex. producteur, acheteur, transporteur). Moins de rôles au départ, plus de profondeur métier.
+            </p>
+
+            <h2 data-fr="2. Un jalon qui prouve la boucle" data-en="2. A milestone that proves the loop">2. Un jalon qui prouve la boucle</h2>
+            <p data-fr="Le MVP utile : publier une offre, commander, confirmer un paiement (même manuel au début), suivre un statut. Sans cette boucle, on a un site vitrine." data-en="A useful MVP: publish an offer, place an order, confirm a payment (even manually at first), track status. Without that loop, you only have a brochure site.">
+                Le MVP utile : publier une offre, commander, confirmer un paiement (même manuel au début), suivre un statut. Sans cette boucle, on a un site vitrine.
+            </p>
+
+            <h2 data-fr="3. Confiance avant les fioritures" data-en="3. Trust before polish">3. Confiance avant les fioritures</h2>
+            <p data-fr="Vérification des comptes, modération des annonces, historique visible : c’est souvent plus décisif qu’une animation de plus. Au Togo comme ailleurs en Afrique de l’Ouest, la confiance locale construit l’usage." data-en="Account verification, listing moderation, visible history: often more decisive than another animation. In Togo and across West Africa, local trust drives adoption.">
+                Vérification des comptes, modération des annonces, historique visible : c’est souvent plus décisif qu’une animation de plus. Au Togo comme ailleurs en Afrique de l’Ouest, la confiance locale construit l’usage.
+            </p>
+
+            <h2 data-fr="4. Déployer tôt" data-en="4. Deploy early">4. Déployer tôt</h2>
+            <p data-fr="HTTPS, sauvegardes, logs : dès le premier environnement réel. Un MVP “presque fini” sur un laptop ne convainc personne." data-en="HTTPS, backups, logs: from the first real environment. An “almost done” MVP on a laptop convinces no one.">
+                HTTPS, sauvegardes, logs : dès le premier environnement réel. Un MVP “presque fini” sur un laptop ne convainc personne.
+            </p>
+
+            <p class="article-cta">
+                <a class="btn btn-primary" href="../index.html#contact" data-fr="Parler de votre MVP" data-en="Talk about your MVP">Parler de votre MVP</a>
+                <a class="btn btn-ghost" href="../index.html#insights" data-fr="Tous les insights" data-en="All insights">Tous les insights</a>
+            </p>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-meta">&copy; <span id="year">2026</span> Kevram Tech</p>
+            <div class="footer-links">
+                <a href="../index.html">Accueil</a>
+                <a href="mailto:manager@kevram.tech">Email</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../script.js"></script>
+</body>
+</html>

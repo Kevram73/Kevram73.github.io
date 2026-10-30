@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions légales — Kevram Tech</title>
+    <meta name="description" content="Mentions légales du site kevram.tech — Kevram Tech SARL U, Lomé, Togo.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://kevram.tech/mentions-legales.html">
+    <meta property="og:title" content="Mentions légales — Kevram Tech">
+    <meta property="og:url" content="https://kevram.tech/mentions-legales.html">
+    <meta property="og:image" content="https://kevram.tech/og-image.png">
+    <script>
+        (() => {
+            const stored = localStorage.getItem("kevram-theme");
+            const theme = stored === "light" || stored === "dark"
+                ? stored
+                : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header is-scrolled">
+        <a href="index.html" class="brand-mark">
+            <img src="logo.svg" alt="" class="brand-logo" width="32" height="32">
+            <span>Kevram Tech</span>
+        </a>
+        <div class="header-end">
+            <a href="index.html#contact" class="btn btn-nav">Contact</a>
+        </div>
+    </header>
+    <main class="legal-page">
+        <div class="container">
+            <h1>Mentions légales</h1>
+            <p class="legal-lead">Informations relatives à l’éditeur et à l’hébergement du site <strong>kevram.tech</strong>.</p>
+
+            <h2>Éditeur</h2>
+            <p><strong>Kevram Tech</strong><br>
+            Entreprise de conception et de développement de produits digitaux<br>
+            Siège : Lomé, Togo<br>
+            Email : <a href="mailto:manager@kevram.tech">manager@kevram.tech</a><br>
+            Fondateur / direction technique : Ativon Yawo Kevin Eyram</p>
+            <p>
+                RCCM : TG-LFW-01-2025-B13-00855<br>
+                NIF : 1002033705<br>
+                N° CNSS : 201017
+            </p>
+
+            <h2>Hébergement</h2>
+            <p>Le site est hébergé sur un serveur privé virtuel (VPS) opéré pour Kevram Tech.<br>
+            Adresse IP publique de publication : 46.202.153.86</p>
+
+            <h2>Propriété intellectuelle</h2>
+            <p>L’ensemble des contenus (textes, logos, éléments graphiques, code front) présents sur kevram.tech est la propriété de Kevram Tech, sauf mention contraire. Toute reproduction non autorisée est interdite.</p>
+
+            <h2>Limitation de responsabilité</h2>
+            <p>Kevram Tech s’efforce d’assurer l’exactitude des informations publiées. Des erreurs ou omissions peuvent subsister. L’utilisation des liens externes (réalisations, réseaux) se fait sous la responsabilité de l’utilisateur.</p>
+
+            <h2>Contact</h2>
+            <p><a href="mailto:manager@kevram.tech">manager@kevram.tech</a> · <a href="index.html">Retour à l’accueil</a></p>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-meta">&copy; <span id="year">2026</span> Kevram Tech</p>
+            <div class="footer-links">
+                <a href="confidentialite.html">Confidentialité</a>
+                <a href="index.html">Accueil</a>
+            </div>
+        </div>
+    </footer>
+    <script>document.getElementById("year").textContent = String(new Date().getFullYear());</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiements FCFA &amp; Mobile Money dans une app — Kevram Tech</title>
+    <meta name="description" content="Intégrer les paiements FCFA et Mobile Money dans une application : webhooks, idempotence, montants serveur et pièges à éviter. Guide Kevram Tech.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://kevram.tech/insights/paiements-fcfa-mobile-money.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Paiements FCFA &amp; Mobile Money dans une app">
+    <meta property="og:description" content="Webhook prestataire, confirmation unique, montants serveur — bonnes pratiques Kevram Tech.">
+    <meta property="og:url" content="https://kevram.tech/insights/paiements-fcfa-mobile-money.html">
+    <meta property="og:image" content="https://kevram.tech/og-image.png">
+    <meta property="og:site_name" content="Kevram Tech">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kevram.tech/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Paiements FCFA & Mobile Money dans une app",
+      "description": "Intégrer les paiements FCFA et Mobile Money : webhooks, idempotence et pièges à éviter.",
+      "author": { "@type": "Organization", "name": "Kevram Tech" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Kevram Tech",
+        "logo": { "@type": "ImageObject", "url": "https://kevram.tech/logo.svg" }
+      },
+      "mainEntityOfPage": "https://kevram.tech/insights/paiements-fcfa-mobile-money.html",
+      "image": "https://kevram.tech/og-image.png",
+      "inLanguage": "fr"
+    }
+    </script>
+    <script>
+        (() => {
+            const stored = localStorage.getItem("kevram-theme");
+            const theme = stored === "light" || stored === "dark"
+                ? stored
+                : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../logo.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header is-scrolled">
+        <a href="../index.html" class="brand-mark">
+            <img src="../logo.svg" alt="" class="brand-logo" width="32" height="32">
+            <span>Kevram Tech</span>
+        </a>
+        <div class="header-end">
+            <button type="button" id="theme-toggle" class="theme-btn" aria-label="Thème">
+                <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"></path></svg>
+            </button>
+            <button type="button" id="language-toggle" class="lang-btn" aria-label="Langue"><span class="current-lang">FR</span></button>
+            <a href="../index.html#contact" class="btn btn-nav" data-fr="Nous écrire" data-en="Contact us">Nous écrire</a>
+        </div>
+    </header>
+    <main class="article-page">
+        <article class="container article">
+            <p class="article-kicker"><a href="../index.html#insights">Insights</a> · 2026</p>
+            <h1 data-fr="Paiements FCFA &amp; Mobile Money dans une app" data-en="FCFA payments &amp; Mobile Money in an app">Paiements FCFA &amp; Mobile Money dans une app</h1>
+            <p class="article-lead" data-fr="En FCFA, la confiance se joue côté serveur. Le client peut afficher “paiement en cours” ; seul le prestataire confirme." data-en="With FCFA, trust lives on the server. The client may show “payment pending”; only the provider confirms.">
+                En FCFA, la confiance se joue côté serveur. Le client peut afficher “paiement en cours” ; seul le prestataire confirme.
+            </p>
+
+            <h2 data-fr="Le montant ne vient jamais du navigateur" data-en="Never take the amount from the browser">Le montant ne vient jamais du navigateur</h2>
+            <p data-fr="Le catalogue (ou le devis) fixe le prix. L’API crée une commande avec le montant calculé côté serveur. Accepter un montant saisi par le client, c’est ouvrir la porte à la fraude." data-en="The catalogue (or quote) sets the price. The API creates an order with a server-side amount. Accepting a client-sent amount invites fraud.">
+                Le catalogue (ou le devis) fixe le prix. L’API crée une commande avec le montant calculé côté serveur. Accepter un montant saisi par le client, c’est ouvrir la porte à la fraude.
+            </p>
+
+            <h2 data-fr="Webhook signé = source de vérité" data-en="Signed webhook = source of truth">Webhook signé = source de vérité</h2>
+            <p data-fr="Mobile Money, agrégateurs, virements : la confirmation passe par un callback signé. Sans signature valide, on refuse. Une commande n’est “payée” qu’une seule fois (idempotence)." data-en="Mobile Money, aggregators, transfers: confirmation comes through a signed callback. Invalid signatures are rejected. An order is marked paid only once (idempotency).">
+                Mobile Money, agrégateurs, virements : la confirmation passe par un callback signé. Sans signature valide, on refuse. Une commande n’est “payée” qu’une seule fois (idempotence).
+            </p>
+
+            <h2 data-fr="Prévoir le paiement manuel" data-en="Plan for manual payment">Prévoir le paiement manuel</h2>
+            <p data-fr="Espèces, dépôt banque, confirmation admin : utiles au démarrage. Même flux métier, autre canal de validation — toujours journalisé." data-en="Cash, bank deposit, admin confirmation: useful early on. Same business flow, different validation channel — always audited.">
+                Espèces, dépôt banque, confirmation admin : utiles au démarrage. Même flux métier, autre canal de validation — toujours journalisé.
+            </p>
+
+            <h2 data-fr="UX honnête" data-en="Honest UX">UX honnête</h2>
+            <p data-fr="Afficher clairement “en attente de confirmation”. Éviter le faux “succès” qui crée des litiges et de la perte de confiance." data-en="Clearly show “awaiting confirmation”. Avoid a fake “success” that creates disputes and erodes trust.">
+                Afficher clairement “en attente de confirmation”. Éviter le faux “succès” qui crée des litiges et de la perte de confiance.
+            </p>
+
+            <p class="article-cta">
+                <a class="btn btn-primary" href="../index.html#contact" data-fr="Besoin d’un flux paiement ?" data-en="Need a payment flow?">Besoin d’un flux paiement ?</a>
+                <a class="btn btn-ghost" href="../index.html#insights" data-fr="Tous les insights" data-en="All insights">Tous les insights</a>
+            </p>
+        </article>
+    </main>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-meta">&copy; <span id="year">2026</span> Kevram Tech</p>
+            <div class="footer-links">
+                <a href="../index.html">Accueil</a>
+                <a href="mailto:manager@kevram.tech">Email</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../script.js"></script>
+</body>
+</html>

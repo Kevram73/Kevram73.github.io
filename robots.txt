@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Prefer the public marketing pages
+Allow: /insights/
+Allow: /mentions-legales.html
+Allow: /confidentialite.html
+
+Sitemap: https://kevram.tech/sitemap.xml

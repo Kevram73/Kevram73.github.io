@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kevram Tech">
+  <defs>
+    <linearGradient id="g" x1="6" y1="2" x2="58" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f06d1a"/>
+      <stop offset="1" stop-color="#c44d03"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#g)"/>
+  <!-- Geometric K -->
+  <path fill="#fff" d="M17 13h9.5v15.2L40.2 13H52L35.4 31.2 52 51H40.1L26.5 35.1V51H17V13z"/>
+</svg>
